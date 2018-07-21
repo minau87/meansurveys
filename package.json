@@ -1,0 +1,31 @@
+{
+  "name": "meansurveys",
+  "version": "1.0.0",
+  "description": "A simple app to create surveys powered by a RESTful ExpressJs backend and a Angular frontend.\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5C\u001b[1;5C\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minau87/meansurveys.git"
+  },
+  "keywords": [
+    "REST",
+    "RESTful",
+    "NodeJs",
+    "Express",
+    "Angular",
+    "Full-Stack",
+    "MongoDB",
+    "MEAN",
+    "MEAN",
+    "stack"
+  ],
+  "author": "Michèl Nauen, Lukas Franken",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/minau87/meansurveys/issues"
+  },
+  "homepage": "https://github.com/minau87/meansurveys#readme"
+}
