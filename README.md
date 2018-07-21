@@ -21,5 +21,5 @@ For visualizing the results we're using Charts.js. Depending on how much progres
 in the limited amount of time we have, real-time updates for displaying the results are 
 an option we consider.
 
-#REST-API documentation
+# REST-API documentation
 Following at a later point.
