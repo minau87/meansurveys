@@ -38,7 +38,7 @@ the commandline by executing __mongod --version__ or __node -v__ respectively.
    to install all the dependencies.
 2. Next, to automatically update without having to restart the server each time, 
    we're using [nodemon](https://www.npmjs.com/package/nodemon). To install nodemon globally, use the __npm install -g nodemon__ command.
-3. Finally we have to install the dependencies of Angular app. For that, navigate into the client
+3. Finally we have to install the dependencies of our Angular app. For that, navigate into the client
    folder and run __npm install__ again.
 
 # Starting the application

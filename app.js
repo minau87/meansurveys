@@ -46,9 +46,9 @@ ${err}
 app.use(express.static(path.join(__dirname, 'client')));
 
 // Importing routes
-const users = require('./routes/users');
-const surveys = require('./routes/surveys');
-const authentication = require('./routes/authentication');
+const userRouter = require('./routes/user.endpoints');
+const surveyRouter = require('./routes/survey.endpoints');
+const authenticationRouter = require('./routes/authentication.endpoints');
 
 // Adding the CORS middleware
 app.use(cors());
@@ -65,9 +65,9 @@ app.get('/', (req, res) => {
 });
 
 // Using the routes specified above
-app.use('/api/users', users);
-app.use('/api/surveys', surveys);
-app.use('/auth', authentication);
+app.use('/api/users', userRouter);
+app.use('/api/surveys', surveyRouter);
+app.use('/auth', authenticationRouter);
 
 app.use('*', (req, res) => {
   res.send('Invalid Endpoint!');
