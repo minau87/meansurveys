@@ -7,6 +7,12 @@ const jwt = require('jsonwebtoken');
 
 // Register a new user
 userRouter.post('/', (req, res, next) => {
+  User.findUserByUsername(req.body.username, (err, user) => {
+    if (err) throw err;
+    if (user) {
+      res.json({success: false, msg: 'This username already exists. Please choose a different username.'})
+    }
+  });
   // Creating a new User object
   let newUser = new User({
     name: req.body.name,

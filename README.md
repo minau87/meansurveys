@@ -28,7 +28,7 @@ Because it's a MEAN stack application, you want to make sure that you have
 
 installed before continuing.
 
-As of today, we're using __MongoDB 4.0.0__ and __NodeJS 8.9.1__.
+As of today, we're using __MongoDB 4.0.0__ and __NodeJS 10.7.0__.
 You can check the version of already existing installations via 
 the commandline by executing __mongod --version__ or __node -v__ respectively.
 

@@ -1,9 +1,10 @@
 // Imports
 const express = require('express');
 const surveyRouter = express.Router();
+const passport = require('passport');
 
-// Create a new survey
-surveyRouter.post('/', (req, res, next) => {
+// Create a new survey (protected)
+surveyRouter.post('/', passport.authenticate('jwt', { session: false }), (req, res, next) => {
   res.send('POSTing a new survey.');
 });
 
@@ -18,6 +19,8 @@ surveyRouter.get('/:id', (req, res, next) => {
 });
 
 // Updating an existing survey
+// Should be used when either updating the survey or
+// pushing answers
 surveyRouter.put('/:id', (req, res, next) => {
   res.send(`PUTing an existing survey with an ID of ${req.params.id}.`);
 });

@@ -29,6 +29,11 @@ module.exports.getUserById = (id, callback) => {
   User.findById(id, callback);
 };
 
+module.exports.getUserByUsername = (username, callback) => {
+  const selector = {username: username};
+  User.findOne(selector, callback);
+};
+
 module.exports.addUser = (newUser, callback) => {
   // Generate salt
   bcrypt.genSalt(10, (err, salt) => {
@@ -39,5 +44,12 @@ module.exports.addUser = (newUser, callback) => {
       newUser.password = hash;
       newUser.save(callback);
     });
+  });
+};
+
+module.exports.comparePassword = (candidatePassword, hash, callback) => {
+  bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
+    if (err) throw err;
+    callback(null, isMatch);
   });
 };

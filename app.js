@@ -1,4 +1,5 @@
 // Import required modules
+
 const express = require('express');
 const path = require("path");
 const bodyParser = require("body-parser");
@@ -48,13 +49,18 @@ app.use(express.static(path.join(__dirname, 'client')));
 // Importing routes
 const userRouter = require('./routes/user.endpoints');
 const surveyRouter = require('./routes/survey.endpoints');
-const authenticationRouter = require('./routes/authentication.endpoints');
+const authRouter = require('./routes/authentication.endpoints');
 
 // Adding the CORS middleware
 app.use(cors());
 
 // Body Parser middleware
 app.use(bodyParser.json());
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passport')(passport);
 
 // Port we're using
 const port = process.env.PORT || 3000;
@@ -67,7 +73,7 @@ app.get('/', (req, res) => {
 // Using the routes specified above
 app.use('/api/users', userRouter);
 app.use('/api/surveys', surveyRouter);
-app.use('/auth', authenticationRouter);
+app.use('/auth', authRouter);
 
 app.use('*', (req, res) => {
   res.send('Invalid Endpoint!');
