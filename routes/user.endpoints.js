@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 
 // Register a new user
 userRouter.post('/', (req, res, next) => {
-  User.findUserByUsername(req.body.username, (err, user) => {
+  User.getUserByUsername(req.body.username, (err, user) => {
     if (err) throw err;
     if (user) {
       res.json({success: false, msg: 'This username already exists. Please choose a different username.'})
@@ -30,14 +30,19 @@ userRouter.post('/', (req, res, next) => {
       res.json({success: true, msg: 'New user has been registered.', id: user._id});
     }
   });
-  
-  // res.send('POSTing a new user');
-
 });
 
 // Getting all the users
 userRouter.get('/', (req, res, next) => {
-  res.send('GETting all the users')
+  User.getUsers((err, users) => {
+    if(err){
+      // Send error message
+      res.json({success: false, msg: 'No users found.'});
+    } 
+    if(users){
+      res.json({success: true, msg: 'Users found.', users: users});
+    }
+  });
 });
 
 // Get a single user by ID
@@ -47,12 +52,27 @@ userRouter.get('/:id', (req, res, next) => {
 
 // Updating an existing user
 userRouter.put('/:id', (req, res, next) => {
-  res.send(`PUTing an existing user with an ID of ${req.params.id}.`);
+  let userId = req.params.id;
+  let updates = req.body;
+  User.updateUser(userId, updates, {}, (err, user) => {
+    if(err){
+      res.json({success: false, msg: 'Could not update user.'});
+    } else {
+      res.json({success: true, msg: 'User updated.', modified: user.nModified});
+    }
+  })
 });
 
 // Deleting an existing user
 userRouter.delete('/:id', (req, res, next) => {
-  res.send(`DELETEing an existing user with an ID of ${req.params.id}.`);
+  let userId = req.params.id;
+  User.deleteUser(userId, (err) => {
+    if(err){
+      res.json({success: false, msg: 'Could not delete user.'});
+    } else {
+      res.json({success: true, msg: 'User deleted successfully.'});
+    }
+  });
 });
 
 module.exports = userRouter;

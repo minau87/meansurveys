@@ -1,5 +1,4 @@
 // Import required modules
-
 const express = require('express');
 const path = require("path");
 const bodyParser = require("body-parser");
@@ -14,9 +13,8 @@ const app = express();
 // Connect to MongoDB
 mongoose.connect(dbconfig.mongouri);
 
-// On DB connection
+// Log to console when DB connection was established successfully
 mongoose.connection.on('connected', () => {
-  // Log to console when connection was established successfully.
   console.log(
     `
 *******************************************\n
@@ -30,7 +28,7 @@ has been established.
   );
 });
 
-// On DB error
+// Log to console when when connecting to DB caused an error
 mongoose.connection.on('error', (err) =>{
   console.log(
     `
@@ -46,7 +44,7 @@ ${err}
 // Setting the folder for static files (the Angular app)
 app.use(express.static(path.join(__dirname, 'client')));
 
-// Importing routes
+// Importing routes (API endpoints)
 const userRouter = require('./routes/user.endpoints');
 const surveyRouter = require('./routes/survey.endpoints');
 const authRouter = require('./routes/authentication.endpoints');
@@ -54,15 +52,15 @@ const authRouter = require('./routes/authentication.endpoints');
 // Adding the CORS middleware
 app.use(cors());
 
-// Body Parser middleware
+// Adding the Body Parser middleware
 app.use(bodyParser.json());
 
-// Passport middleware
+// Adding the Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 require('./config/passport')(passport);
 
-// Port we're using
+// Declaring the port we're using
 const port = process.env.PORT || 3000;
 
 // Specify the default route for our app
@@ -75,11 +73,10 @@ app.use('/api/users', userRouter);
 app.use('/api/surveys', surveyRouter);
 app.use('/auth', authRouter);
 
+// Declare what we serve when a route is adressed we didn't specify
 app.use('*', (req, res) => {
   res.send('Invalid Endpoint!');
 });
-
-// Catch any other route that's not specified above
 
 // Listen on the specified port above
 app.listen(port, () => {
@@ -93,5 +90,3 @@ Press Ctrl+C to stop the server.\n
     `
   );
 });
-
-// Next, create user model and register
