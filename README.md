@@ -86,7 +86,12 @@ consider a proper role based authentication mechanism.
 
 In order to authenticate, username and password have to be submitted as part of the request body:
 
-{__username__: username, __password__: password}
+```
+{
+  username: username,
+  password: password
+}
+```
 
 | Endpoint          | Method         | What it does                               |
 | ----------------- |:---------------| :------------------------------------------|
