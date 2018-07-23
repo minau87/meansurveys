@@ -55,7 +55,7 @@ served from the public folder. Then all you have to do is
 2. Start the server via the __npm start__ command from within the MEANSurveys-folder.
 
 # REST-API documentation
-<hr>
+
 <h4>Users:</h4>
 <p>The following table shows the available API endpoints for user data and method usage with it's corresponding effect.</p>
 
@@ -76,3 +76,34 @@ served from the public folder. Then all you have to do is
 | /api/surveys/:id  | PUT            | Updates the survey with ID :id             |
 | /api/surveys/:id  | DELETE         | Removes the survey with the ID :id         |
 <hr>
+
+# Admins, Users and authentication
+Because part of our assignment was to only have admins create surveys, we implemented a
+basic authentication strategy based on JWT as shown by [Traversy Media](https://www.youtube.com/watch?v=uONz0lEWft0&list=PLillGF-RfqbZMNtaOXJQiDebNXjVapWPZ&index=1) in one of his many useful tutorials. This allows us to guard certain endpoints and prevent regular
+users from creating surveys. We'll simply distinguish between an admin and an user by adding an
+additional field to the user document in MongoDB, although this is not exactly what one would
+consider a proper role based authentication mechanism.
+
+In order to authenticate, username and password have to be submitted as part of the request body:
+
+{__username__: username, __password__: password}
+
+| Endpoint          | Method         | What it does                               |
+| ----------------- |:---------------| :------------------------------------------|
+| /auth             | Post           | Authenticates a user                       |
+
+When the authentication process (a user was found and his passwords match) was successful, well send a response that looks like this.
+
+```
+{
+  success: true,
+  token: JWT token,
+  user: {
+    id: userId,
+    name: name,
+    email: email,
+    username: username
+  }
+}
+```
+The token can then be stored in local storage or a cookie to send along with later requests.
