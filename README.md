@@ -55,4 +55,24 @@ served from the public folder. Then all you have to do is
 2. Start the server via the __npm start__ command from within the MEANSurveys-folder.
 
 # REST-API documentation
-Following at a later point.
+<hr>
+<h4>Users:</h4>
+<p>The following table shows the available API endpoints for user data and method usage with it's corresponding effect.</p>
+
+| Endpoint        | Method         | What it does                               |
+| --------------- |:---------------| :------------------------------------------|
+| /api/users      | GET            | Returns all users                          |
+| /api/users      | POST           | Adds a new user                            |
+| /api/users/:id  | PUT            | Updates the user with ID :id               |
+| /api/users/:id  | DELETE         | Removes the user with the ID :id           |
+<hr>
+<h4>Surveys:</h4>
+<p>The following table shows the available API endpoints for survey data and method usage with it's correspondig effect.</p>
+
+| Endpoint          | Method         | What it does                               |
+| ----------------- |:---------------| :------------------------------------------|
+| /api/surveys      | GET            | Returns all surveys                        |
+| /api/surveys      | POST           | Adds a new survey                          |
+| /api/surveys/:id  | PUT            | Updates the survey with ID :id             |
+| /api/surveys/:id  | DELETE         | Removes the survey with the ID :id         |
+<hr>
