@@ -10,7 +10,10 @@ userRouter.post('/', (req, res, next) => {
   User.getUserByUsername(req.body.username, (err, user) => {
     if (err) throw err;
     if (user) {
-      res.json({success: false, msg: 'This username already exists. Please choose a different username.'})
+      res.json({
+        success: false,
+        msg: 'This username already exists. Please choose a different username.'
+      })
     }
   });
   // Creating a new User object
@@ -22,12 +25,19 @@ userRouter.post('/', (req, res, next) => {
   });
   // Actually adding the new user
   User.addUser(newUser, (err, user) => {
-    if(err){
+    if (err) {
       // Send error message
-      res.json({success: false, msg: 'Failed to register new user.'});
+      res.json({
+        success: false,
+        msg: 'Failed to register new user.'
+      });
     } else {
       // Send success message and user ID for later use
-      res.json({success: true, msg: 'New user has been registered.', id: user._id});
+      res.json({
+        success: true,
+        msg: 'New user has been registered.',
+        id: user._id
+      });
     }
   });
 });
@@ -35,12 +45,19 @@ userRouter.post('/', (req, res, next) => {
 // Getting all the users
 userRouter.get('/', (req, res, next) => {
   User.getUsers((err, users) => {
-    if(err){
+    if (err) {
       // Send error message
-      res.json({success: false, msg: 'No users found.'});
-    } 
-    if(users){
-      res.json({success: true, msg: 'Users found.', users: users});
+      res.json({
+        success: false,
+        msg: 'No users found.'
+      });
+    }
+    if (users) {
+      res.json({
+        success: true,
+        msg: 'Users found.',
+        users: users
+      });
     }
   });
 });
@@ -55,10 +72,17 @@ userRouter.put('/:id', (req, res, next) => {
   let userId = req.params.id;
   let updates = req.body;
   User.updateUser(userId, updates, {}, (err, user) => {
-    if(err){
-      res.json({success: false, msg: 'Could not update user.'});
+    if (err) {
+      res.json({
+        success: false,
+        msg: 'Could not update user.'
+      });
     } else {
-      res.json({success: true, msg: 'User updated.', modified: user.nModified});
+      res.json({
+        success: true,
+        msg: 'User updated.',
+        modified: user.nModified
+      });
     }
   })
 });
@@ -67,10 +91,16 @@ userRouter.put('/:id', (req, res, next) => {
 userRouter.delete('/:id', (req, res, next) => {
   let userId = req.params.id;
   User.deleteUser(userId, (err) => {
-    if(err){
-      res.json({success: false, msg: 'Could not delete user.'});
+    if (err) {
+      res.json({
+        success: false,
+        msg: 'Could not delete user.'
+      });
     } else {
-      res.json({success: true, msg: 'User deleted successfully.'});
+      res.json({
+        success: true,
+        msg: 'User deleted successfully.'
+      });
     }
   });
 });

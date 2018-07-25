@@ -97,7 +97,7 @@ In order to authenticate, username and password have to be submitted as part of 
 | ----------------- |:---------------| :------------------------------------------|
 | /auth             | Post           | Authenticates a user                       |
 
-When the authentication process (a user was found and his passwords match) was successful, well send a response that looks like this.
+When the authentication process (a user was found and his passwords match) was successful, well send a response that looks like this:
 
 ```
 {
