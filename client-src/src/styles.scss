@@ -1,0 +1,44 @@
+/* You can add global styles to this file, and also import other style files */
+/*@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';*/
+/* @import '~@angular/material/prebuilt-themes/indigo-pink.css'; */
+/* @import '~@angular/material/prebuilt-themes/purple-green.css'; */
+/*@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';*/
+/* @import 'app/styles/unicorn-app-theme.scss'; */
+
+@import 'app/styles/_mixins.scss';
+
+body{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.fill-remaining-space {
+  /* This fills the remaining space, by using flexbox. 
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+.heading{
+  background-color: $primary;
+  margin: 0;
+  padding: 1rem;
+}
+
+.main-heading{
+  // color: set-text-color($primary);
+  color: $accent;
+}
+
+.sub-heading{
+  margin: 0;
+  font-size: .7rem;
+  color: #424242;
+  display: block;
+}
+
+.text-block{
+  text-align: justify;
+}

@@ -23,7 +23,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss",
+              "src/app/styles/custom-theme.scss"
             ],
             "scripts": []
           },
@@ -123,5 +124,10 @@
       }
     }
   },
-  "defaultProject": "client-src"
+  "defaultProject": "client-src",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleExt": "scss"
+    }
+  }
 }

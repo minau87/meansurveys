@@ -1,0 +1,19 @@
+@import "../styles/custom-theme.scss";
+@import "~@angular/material/theming";
+
+$custom-primary: mat-palette($custom-mint);
+$custom-accent:  mat-palette($mat-pink, 500, 900, A100);
+$custom-warn:    mat-palette($mat-deep-orange);
+
+$primary: mat-color($custom-primary);
+$accent:  mat-color($custom-accent);
+$warn:    mat-color($custom-warn);
+
+/*Set the text color appropriate for background color*/
+@function set-text-color($color){
+  @if(lightness($color) > 40){
+    @return #000;
+  } @else {
+    @return #fff;
+  }
+}

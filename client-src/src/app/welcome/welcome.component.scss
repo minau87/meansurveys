@@ -1,0 +1,52 @@
+@import "../styles/_mixins.scss";
+:host{
+  // height: 100% !important;
+  // height: calc(100vh - 64px - 75px - 60px - 0.5rem);
+}
+.welcome-container{
+  display: grid;
+  height: calc(100vh - 64px - 75px - 60px - 0.5rem);
+  grid-gap: 0rem .5rem;
+  grid-template-areas: 
+  'w-create-survey w-participate-survey w-about-authors';
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: .5rem .5rem 0rem .5rem;
+  .w-create-survey, .w-participate-survey, .w-about-authors{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    // width: 100%;
+    mat-card{
+      width: 100%;
+      mat-card-header{
+        mat-card-title{
+          color: $primary;
+          font-weight: bolder;
+        }
+      }
+    }
+  }
+  .w-create-survey{
+    grid-area: w-create-survey;
+  }
+  .w-participate-survey{
+    grid-area: w-participate-survey;
+  }
+  .w-about-authors{
+    grid-area: w-about-authors;
+  }
+}
+.welcome-container::after{
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url("/assets/img/welcome.jpg");
+  opacity: 0.3;
+  // background-size: contain;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+}

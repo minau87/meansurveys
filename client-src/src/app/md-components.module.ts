@@ -18,7 +18,10 @@ import {
   MatListModule,
   MatTableModule,
   MatSlideToggleModule,
-  MatDialogModule
+  MatDialogModule,
+  MatProgressBarModule,
+  MatDividerModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 // Einbindung aller benötigter Material-Design-Komponenten
@@ -43,7 +46,10 @@ import {
     MatListModule,
     MatTableModule,
     MatSlideToggleModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressBarModule,
+    MatDividerModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     MatButtonModule,
@@ -64,7 +70,10 @@ import {
     MatListModule,
     MatTableModule,
     MatSlideToggleModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressBarModule,
+    MatDividerModule,
+    MatProgressSpinnerModule
   ],
   providers: []
 })

@@ -1,0 +1,51 @@
+@import "../styles/_mixins.scss";
+.progress-bar-top{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 6px;
+  width: 100%;
+}
+
+.survey-list-container{
+  display: grid;
+  grid-template-areas:
+  'survey-table survey-list-info';
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 0rem .5rem;
+  // padding: .5rem;
+  margin: .5rem;
+  border-radius: .5rem;
+  // background-color: lighten($primary, 10%);
+  .survey-table, .survey-list-info{
+    border: 1px solid #000;    
+  }
+  .survey-table{
+    grid-area: survey-table;
+    height: 50px !important;
+    overflow-y: scroll;
+    tr:not(:nth-child(0)):hover{
+      background-color: lighten(#424242, 10%);
+      transition: background-color .3s ease-in-out;
+    }
+    box-sizing: border-box;
+    th{
+      font-weight: bold;
+    }
+    td{
+      mat-icon:hover{
+        color: $accent;
+        cursor: pointer;
+      }
+    }
+    .mat-header-row:hover{
+      background-color: #424242 !important;
+    }    
+  }
+  .survey-list-info{
+    grid-area: survey-list-info;
+    background-color: #424242;
+    color: set-text-color(#424242);
+    padding: .5rem;
+  }
+}

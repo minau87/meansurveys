@@ -1,0 +1,10 @@
+@import "../styles/_mixins.scss";
+mat-toolbar{
+  .mat-button{
+    font-weight: 600;
+    color: set-text-color($primary)
+  }
+  .branding{
+    color: $accent;
+  }
+}

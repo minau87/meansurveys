@@ -1,0 +1,40 @@
+@import "./styles/_mixins.scss";
+.main-container{
+  display: grid;
+  grid-template-areas:
+  'app-navigation'
+  'router-container'
+  'app-footer';
+  position: absolute;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  // height: calc(100% - 64px);
+  .app-navigation{
+    grid-area: app-navigation;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    // width: 100%;
+  }
+  .router-container{
+    grid-area: router-container;
+    // padding: .5rem;
+    min-height: calc(100vh - 64px - 60px);
+  }
+  .app-footer{
+    grid-area: app-footer;
+    height: 60px;
+    background-color: $primary;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    color: set-text-color($primary);
+    .cr-notice{
+      flex: 1;
+    }
+  }
+}
