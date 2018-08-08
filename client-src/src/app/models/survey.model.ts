@@ -31,3 +31,10 @@ export interface AnswerPossibility {
 export interface Answer {
   derp: String;
 }
+
+export interface SurveyResponse {
+  success: Boolean;
+  msg: String;
+  surveys?: Survey[];
+  survey?: Survey;
+}

@@ -1,0 +1,36 @@
+<div class="registration-form-container">
+  <h2 class="heading main-heading">
+    Register
+    <h4 class="sub-heading">a new user</h4>
+  </h2>
+  <form #registrationForm (ngSubmit)="submitRegistration()" class="registration-form" [formGroup]="userDataForm">
+    <mat-form-field [hideRequiredMarker]="false" appearance="outline" class="mat-form-field">
+      <mat-label>Name</mat-label>
+      <input matInput type="text" formControlName="name" required>
+      <mat-hint align="end">Must have atleast 3 characters</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field [hideRequiredMarker]="false" appearance="outline" class="mat-form-field">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" required>
+      <mat-hint align="end">Enter a valid Email adress</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field [hideRequiredMarker]="false" appearance="outline" class="mat-form-field">
+      <mat-label>Username</mat-label>
+      <input matInput type="text" formControlName="username" required>
+      <mat-hint align="end">Minimum 3, maximum 15 characters</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field [hideRequiredMarker]="false" appearance="outline" class="mat-form-field">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" required>
+      <mat-hint align="end">Must have atleast 5 characters</mat-hint>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <div class="form-buttons">
+      <button type="submit" mat-raised-button [disabled]="!userDataForm.valid" class="register-button" color="primary">Register</button>
+      <button type="button" mat-stroked-button class="login-button" (click)="navigateToLogin()">Login</button>
+    </div>
+  </form>
+</div>

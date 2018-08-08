@@ -1,3 +1,73 @@
-<p>
-  survey-detail works!
-</p>
+<!-- Loading Progress Indicator-->
+<mat-progress-bar class="progress-bar-top" *ngIf="loading" [color]="barColor" [mode]="barMode"></mat-progress-bar>
+<mat-progress-spinner *ngIf="loading" color="accent" mode="indeterminate"></mat-progress-spinner>
+<div *ngIf="!loading" class="survey-detail-container">
+  <h2 class="heading main-heading">
+    {{survey.name}}
+    <h4 class="sub-heading">by {{ survey.creator.username }}</h4>
+  </h2>
+  <!-- Container for survey details -->
+  <div class="survey-details">
+    <h4>Details</h4>
+    <mat-divider></mat-divider>
+    <h5>Description</h5>
+    <p>This survey is about Herp Derp.</p>
+    <mat-divider></mat-divider>
+    <h5>Status</h5>
+    <table mat-table [dataSource]="surveyToArray()" class="survey-table mat-elevation-z8" matSort matSortActive="startDate" matSortDisableClear
+      matSortDirection="asc">
+
+      <!-- Number of questions Column -->
+      <ng-container matColumnDef="numQuestions">
+        <th mat-header-cell *matHeaderCellDef>Number of questions</th>
+        <td mat-cell *matCellDef="let survey">{{survey.questions.length}}</td>
+      </ng-container>
+
+      <!-- Number of participants Column -->
+      <ng-container matColumnDef="numParticipants">
+        <th mat-header-cell *matHeaderCellDef>Number of participants</th>
+        <td mat-cell *matCellDef="let survey">{{survey.participantsCount}}</td>
+      </ng-container>
+
+      <!-- Start Data Column -->
+      <ng-container matColumnDef="startDate">
+        <th mat-header-cell *matHeaderCellDef>Start Date</th>
+        <td mat-cell *matCellDef="let survey">{{survey.startDate | date}}</td>
+      </ng-container>
+
+      <!-- End Data Column -->
+      <ng-container matColumnDef="endDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+          End Date
+        </th>
+        <td mat-cell *matCellDef="let survey">{{survey.endDate | date}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="sl-header-row"></tr>
+      <tr mat-row *matRowDef="let survey; columns: displayedColumns;"></tr>
+    </table>
+    <!-- <p>
+      Open/Closed:
+      <span *ngIf="survey.status && survey.status == 'open'">open</span>
+      <span *ngIf="survey.status && survey.status == 'closed'">closed</span>
+      <br> Start date: {{survey.startDate | date}}
+      <br> End date:
+      <span *ngIf="survey.endDate"> {{survey.endDate | date}}</span>
+      <span *ngIf="!survey.endDate"> None</span>
+    </p>
+    <mat-divider></mat-divider>
+    <h5>Number of questions</h5>
+    <p>{{ survey.questions.length }}</p>
+    <mat-divider></mat-divider>
+    <h5>Number of participants</h5> -->
+  </div>
+  <!-- Container for survey results -->
+  <div class="survey-results">
+    <h4>Results</h4>
+    <mat-divider></mat-divider>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos numquam libero accusantium corrupti facilis atque illum. Ad,
+    voluptatibus impedit? Quia minima voluptatibus, non maiores recusandae iusto optio velit et officiis!Quis accusamus excepturi
+    atque quo labore praesentium qui quibusdam eligendi sed, dignissimos nobis consequatur tempora odit, tenetur quidem dolor
+    porro perferendis aut architecto libero, adipisci vero reiciendis. Ipsam, animi molestias.
+  </div>
+</div>

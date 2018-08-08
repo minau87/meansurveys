@@ -2,9 +2,9 @@
 mat-toolbar{
   .mat-button{
     font-weight: 600;
-    color: set-text-color($primary)
+    color: $primary-text;
   }
   .branding{
-    color: $accent;
+    color: $warn;
   }
 }

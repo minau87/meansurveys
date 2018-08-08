@@ -9,7 +9,7 @@
   </button> -->
 
   <mat-menu #surveyMenu="matMenu">
-    <button mat-menu-item type="button" matTooltip="Create a new Survey" routerLink="/create-survey" routerLinkActive="active">
+    <button *ngIf="_authService.isAdmin()" mat-menu-item type="button" matTooltip="Create a new Survey" routerLink="/create-survey" routerLinkActive="active">
       <mat-icon>playlist_add</mat-icon>New
     </button>
     <button mat-menu-item matTooltip="Show an overview of all surveys" routerLink="/surveys">
@@ -17,7 +17,7 @@
     </button>
   </mat-menu>
 
-  <button mat-button [matMenuTriggerFor]="surveyMenu">
+  <button *ngIf="_authService.isLoggedIn()" mat-button [matMenuTriggerFor]="surveyMenu">
     <mat-icon>assignment</mat-icon> Surveys
   </button>
 
@@ -50,15 +50,20 @@
   </button>
 
   <mat-menu #authMenu="matMenu">
-    <button mat-menu-item type="button" matTooltip="Go to your profile" routerLink="profile" routerLinkActive="active">
+    <button *ngIf="_authService.isLoggedIn()" mat-menu-item type="button" [routerLink]="['/profile', _authService.getUser()._id]" routerLinkActive="active">
       <mat-icon>face</mat-icon>Profile
     </button>
-    <button mat-menu-item matTooltip="Logout">
+    <button mat-menu-item (click)="logout()">
       <mat-icon>power_settings_new</mat-icon>Logout
     </button>
   </mat-menu>
 
-  <button type="button" mat-button [matMenuTriggerFor]="authMenu" matTooltip="Check out your profile or log out">
-    <mat-icon>perm_identity</mat-icon> Bob
+  <button *ngIf="_authService.isLoggedIn()" type="button" mat-button matTooltip="Check out your profile or log out" [matMenuTriggerFor]="authMenu">
+    <mat-icon>perm_identity</mat-icon> {{ _authService.getUser().username }}
   </button>
+
+  <button *ngIf="!_authService.isLoggedIn()" mat-button matTooltip="Sign up or log in" routerLink="/register" routerLinkActive="active">
+    <mat-icon>how_to_reg</mat-icon>Sign up
+  </button>
+
 </mat-toolbar>

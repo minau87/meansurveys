@@ -44,7 +44,7 @@
         Details
       </th>
       <td mat-cell *matCellDef="let row">
-        <mat-icon>chevron_right</mat-icon>
+        <mat-icon [routerLink]="['/survey', row._id]">chevron_right</mat-icon>
       </td>
     </ng-container>
 
@@ -52,7 +52,8 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   <div class="survey-list-info mat-elevation-z8 text-block">
-    <h4>What to do:</h4>
+    <h4>What to do</h4>
+    <mat-divider></mat-divider>
     <p>On the left you see all the surveys that have been created.</p>
     <p>For a detailed view of each survey, click on the corresponding arrow in the "Details" column. 
   </div>

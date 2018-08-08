@@ -53,7 +53,7 @@ const authRouter = require('./routes/authentication.endpoints');
 app.use(cors());
 
 // Adding the Body Parser middleware
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '10mb'}));
 
 // Adding the Passport middleware
 app.use(passport.initialize());

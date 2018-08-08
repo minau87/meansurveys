@@ -1,4 +1,7 @@
 import { NgModule } from '@angular/core';
+
+import 'hammerjs';
+
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -21,7 +24,9 @@ import {
   MatDialogModule,
   MatProgressBarModule,
   MatDividerModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatSnackBarModule,
+  MatSliderModule
 } from '@angular/material';
 
 // Einbindung aller benötigter Material-Design-Komponenten
@@ -49,7 +54,9 @@ import {
     MatDialogModule,
     MatProgressBarModule,
     MatDividerModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    MatSliderModule
   ],
   exports: [
     MatButtonModule,
@@ -73,7 +80,9 @@ import {
     MatDialogModule,
     MatProgressBarModule,
     MatDividerModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    MatSliderModule
   ],
   providers: []
 })

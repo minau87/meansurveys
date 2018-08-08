@@ -1,3 +1,35 @@
-<p>
-  create-survey works!
-</p>
+<div class="create-survey-container">
+  <h2 class="heading main-heading">
+    Create
+    <h4 class="sub-heading">a new survey</h4>
+  </h2>
+  <div class="create-survey-editor">
+    <h4>Editor</h4>
+    <mat-divider></mat-divider>
+
+    <div class="editor-element">
+      <div class="editor-element-label">Is this a limited time survey?</div>
+      <mat-slide-toggle [(ngModel)]="isLimitedSurvey" [color]="toggleConfig.color" [checked]="toggleConfig.checked" (change)="onLimitedSurveyValueChange()">
+        <span *ngIf="isLimitedSurvey">Yes</span>
+        <span *ngIf="!isLimitedSurvey">No</span>
+      </mat-slide-toggle>
+    </div>
+
+    <div *ngIf="isLimitedSurvey" class="editor-element">
+      <div class="editor-element-label">How many days should your survey be open?: {{ daysSurveyLasts }} Day(s)</div>
+      <mat-slider
+        [max]="sliderConfig.max"
+        [min]="sliderConfig.min"
+        [step]="sliderConfig.stepSize"
+        [thumbLabel]="sliderConfig.thumbLabel"
+        [(ngModel)]="daysSurveyLasts"
+        [color]="sliderConfig.color"
+      >
+      </mat-slider>      
+    </div>
+  </div>
+  <div class="create-survey-preview">
+    <h4>Preview</h4>
+    <mat-divider></mat-divider>
+  </div>
+</div>

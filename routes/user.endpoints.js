@@ -4,6 +4,7 @@ const userRouter = express.Router();
 const User = require('../models/user');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const permit = require('../config/permit');
 
 // Register a new user
 userRouter.post('/', (req, res, next) => {
@@ -62,29 +63,63 @@ userRouter.get('/', (req, res, next) => {
   });
 });
 
+// Getting the profile data
+// userRouter.get('/profile', passport.authenticate('jwt', {
+//   session: false
+// }), (req, res, next) => {
+//   console.log("req:", req);
+//   console.log("res:", res);
+//   res.json({
+//     user: req.user
+//   });
+// });
+
+// userRouter.get('/profile', passport.authenticate('jwt', {
+//   session: false
+// }), permit('admin'), (req, res, next) => {
+//   // console.log("req:", req);
+//   // console.log("res:", res);
+//   res.json({
+//     user: req.user
+//   });
+// });
+
 // Get a single user by ID
-userRouter.get('/:id', (req, res, next) => {
-  res.send(`GETting the user with ID ${req.params.id}`);
+userRouter.get('/:id', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  res.json({
+    user: req.user
+  });
 });
 
 // Updating an existing user
 userRouter.put('/:id', (req, res, next) => {
   let userId = req.params.id;
   let updates = req.body;
+  // console.log(req.body.imageBase64);
   User.updateUser(userId, updates, {}, (err, user) => {
     if (err) {
+      console.log("Error updating picture...");
       res.json({
         success: false,
         msg: 'Could not update user.'
       });
     } else {
+      console.log("Updated picture...");
+      // res.json({
+      //   success: true,
+      //   msg: 'User updated.',
+      //   modified: user.nModified
+      // });
+      console.log("Sending response now.");
       res.json({
         success: true,
         msg: 'User updated.',
         modified: user.nModified
       });
     }
-  })
+  });
 });
 
 // Deleting an existing user
@@ -104,5 +139,20 @@ userRouter.delete('/:id', (req, res, next) => {
     }
   });
 });
+
+// NEW!!!
+function requiresAdmin(req, res, next) {
+  console.log('requiresAdmin:', req.user);
+  if (!req.user.admin) {
+    // User not admin, then send 403
+    res.status(403).json({
+      success: false,
+      msg: 'Not authorized.'
+    });
+  } else {
+    // Check okay, move to next middleware
+    next();
+  }
+}
 
 module.exports = userRouter;

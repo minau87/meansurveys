@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Http } from '@angular/http';
 import { Subscription } from 'rxjs';
-import { Survey } from '../models/survey.model';
+import { Survey, SurveyResponse } from '../models/survey.model';
+import { SurveyService } from '../services/survey.service';
 
 @Component({
   selector: 'app-survey-list',
@@ -14,30 +14,31 @@ export class SurveyListComponent implements OnInit, OnDestroy {
   barColor: 'accent';
   barMode: 'determinate';
 
-  loading: Boolean;
+  loading: Boolean = true;
   surveysSub: Subscription;
   surveys: Survey[] = [];
 
-  // displayedColumns = ['_id', 'name', 'startDate', 'endDate'];
+  // Define columns to display in the survey list table
   displayedColumns = ['_id', 'creator', 'name', 'startDate', 'endDate', 'navDetails'];
 
-  constructor(private _http: Http) { }
+  constructor(private _surveyService: SurveyService) { }
 
   ngOnInit() {
-    this.loading = true;
-    this.surveysSub = this._http.get('http://localhost:3000/api/surveys').subscribe((res) => {
-      this.surveys = res.json().surveys;
-      // this.surveys = res;
-
-      console.log('Surveys:', this.surveys);
-      // console.log('Got surveys:', res.json().surveys);
+    this.surveysSub = this._surveyService.getSurveys().subscribe((res: SurveyResponse) => {
+      console.log('Surveys:', res.surveys);
+      this.surveys = res.surveys;
+      window.setTimeout(() => {
+        this.loading = false;
+        console.log('Time is up.');
+      }, 10000);
       this.loading = false;
     }, (err) => {
-      console.log('Error:', err);
+      console.log('Error getting Surveys:', err);
     });
   }
 
   ngOnDestroy() {
+    // Clean up all the subscriptions
     this.surveysSub.unsubscribe();
     this.surveysSub = undefined;
   }

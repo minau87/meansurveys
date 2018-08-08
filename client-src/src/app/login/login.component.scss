@@ -1,0 +1,46 @@
+@import "../styles/_mixins.scss";
+
+.login-form-container{
+  display: grid;
+  grid-template-areas: 
+  "heading heading heading" 
+  ". login-form ." 
+  ". . .";
+  height: calc(100vh - 64px - 60px);
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: .5rem;
+  .heading{
+    grid-area: heading;
+    max-height: 40px;
+  }
+  .login-form{
+    grid-area: login-form;
+    padding: .5rem;
+    width: 100%;
+    mat-form-field{
+      display: block;
+    }
+    mat-form-field.mat-form-field {
+      font-size: .9rem;
+    }
+    .form-buttons{
+      margin-top: .5rem;
+      display: grid;
+      grid-template-areas: "login-button register-button";
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 0.5rem;
+      .login-button{
+        grid-area: login-button;
+      }
+      .register-button{
+        grid-area: register-button;
+      }
+      button:nth-child(2)::before{
+        content: "No account yet? Register now!";
+        position: absolute;
+        bottom: -2rem;
+        right: 0;
+      }           
+    }
+  }
+}

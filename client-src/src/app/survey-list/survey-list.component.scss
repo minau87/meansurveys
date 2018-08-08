@@ -18,14 +18,14 @@
   border-radius: .5rem;
   // background-color: lighten($primary, 10%);
   .survey-table, .survey-list-info{
-    border: 1px solid #000;    
+    // border: 1px solid #000;    
   }
   .survey-table{
     grid-area: survey-table;
     height: 50px !important;
     overflow-y: scroll;
     tr:not(:nth-child(0)):hover{
-      background-color: lighten(#424242, 10%);
+      background-color: lighten($primary, 30%);
       transition: background-color .3s ease-in-out;
     }
     box-sizing: border-box;
@@ -34,18 +34,18 @@
     }
     td{
       mat-icon:hover{
-        color: $accent;
+        color: $warn;
         cursor: pointer;
       }
     }
     .mat-header-row:hover{
-      background-color: #424242 !important;
+      background-color: transparent !important;
     }    
   }
   .survey-list-info{
     grid-area: survey-list-info;
-    background-color: #424242;
-    color: set-text-color(#424242);
+    background-color: #fff;
+    // color: set-text-color(#424242);
     padding: .5rem;
   }
 }

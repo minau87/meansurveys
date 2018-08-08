@@ -1,0 +1,23 @@
+.survey-detail-container{
+  // width: 100%;
+  display: grid;
+  grid-template-areas: 
+  "heading heading"
+  "survey-details survey-results";
+  grid-template-columns: 2fr 2fr;
+  grid-gap: .5rem;
+  .heading{
+    grid-area: heading;
+  }
+  .survey-details{
+    grid-area: survey-details;
+    padding: 0rem 0rem 0rem 16px;
+    .survey-table{
+      width: 100%;
+    }
+  }
+  .survey-results{
+    grid-area: survey-results;
+    padding: 0rem 16px 0rem 0rem;
+  }
+}

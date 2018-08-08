@@ -23,6 +23,12 @@ const userSchema = mongoose.Schema({
   password: {
     type: String,
     require: true
+  },
+  role: {
+    type: String
+  },
+  profilePicture: {
+    type: String
   }
 });
 
@@ -68,7 +74,9 @@ module.exports.updateUser = (id, user, options, callback) => {
   };
 
   const modifier = { $set : {} };
-  modifier.$set = user;
+  // modifier.$set = user;
+  // const image = new Buffer(user.imageBase64, 'base64');
+  modifier.$set = { "profilePicture" : user.imageBase64};
 
   User.update(selector, modifier, options, callback);
 };

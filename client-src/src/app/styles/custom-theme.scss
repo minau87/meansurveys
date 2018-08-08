@@ -55,6 +55,39 @@ $custom-mint: (
     A400 : #caffe0,
     A700 : #b1ffd1,
     contrast: (
+      50: $black-87-opacity,
+      100: $black-87-opacity,
+      200: $black-87-opacity,
+      300: $black-87-opacity,
+      400: $black-87-opacity,
+      500: white,
+      600: white,
+      700: white,
+      800: $white-87-opacity,
+      900: $white-87-opacity,
+      A100: $black-87-opacity,
+      A200: white,
+      A400: white,
+      A700: white,
+    )
+);
+
+$p-primary: (
+    50 : #fff8e1,
+    100 : #ffecb5,
+    200 : #ffe083,
+    300 : #ffd451,
+    400 : #ffca2c,
+    500 : #ffc107,
+    600 : #ffbb06,
+    700 : #ffb305,
+    800 : #ffab04,
+    900 : #ff9e02,
+    A100 : #ffffff,
+    A200 : #fffaf2,
+    A400 : #ffe4bf,
+    A700 : #ffd9a6,
+    contrast: (
         50 : #000000,
         100 : #000000,
         200 : #000000,
@@ -72,17 +105,83 @@ $custom-mint: (
     )
 );
 
+$p-accent: (
+    50 : #f3f3f3,
+    100 : #e2e2e2,
+    200 : #cfcfcf,
+    300 : #bbbbbb,
+    400 : #adadad,
+    500 : #9e9e9e,
+    600 : #969696,
+    700 : #8c8c8c,
+    800 : #828282,
+    900 : #707070,
+    A100 : #fef3f3,
+    A200 : #f9c5c5,
+    A400 : #ff8b8b,
+    A700 : #ff7272,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$p-warn: (
+    50 : #fee8e7,
+    100 : #fcc7c3,
+    200 : #faa19b,
+    300 : #f77b72,
+    400 : #f65f54,
+    500 : #f44336,
+    600 : #f33d30,
+    700 : #f13429,
+    800 : #ef2c22,
+    900 : #ec1e16,
+    A100 : #ffffff,
+    A200 : #ffe9e9,
+    A400 : #ffb8b6,
+    A700 : #ff9f9c,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$custom-primary: mat-palette($custom-mint);
-$custom-accent:  mat-palette($mat-pink, 500, 900, A100);
+$custom-primary: mat-palette($p-primary, 500, 900, A100);
+$custom-accent:  mat-palette($p-accent, 500, 900, A100);
 
 // The warn palette is optional (defaults to red).
-$custom-warn:    mat-palette($mat-deep-orange);
+$custom-warn:    mat-palette($p-warn);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$custom-theme: mat-light-theme($custom-primary, $custom-accent, $custom-warn);
+// $custom-theme: mat-light-theme($custom-primary, $custom-accent, $custom-warn);
 
 $custom-theme: mat-dark-theme($custom-primary, $custom-accent, $custom-warn);
 // Include theme styles for core and each component used in your app.
