@@ -1,0 +1,37 @@
+@import "../../styles/_mixins.scss";
+
+.avatar-upload-wrapper{
+  display: grid;
+  grid-template-areas: 
+  "file-select file-upload"
+  "file-name file-name"
+  "progress-bar progress-bar";
+  grid-template-columns: 1fr 1fr;
+  // grid-template-rows: auto;
+  grid-column-gap: .5rem;
+  margin: 16px 0px 16px 0px;
+  .file-select-section{
+    grid-area: file-select;
+    input{
+      display: none;
+    }
+  }
+  .file-upload-section{
+    grid-area: file-upload;
+  }
+  .file-select-section, .file-upload-section{
+    button{
+      width: 100%;
+    }
+  }
+  .file-name-label{
+    grid-area: file-name;
+    grid-column: span 2;
+    padding-top: .25rem;
+    font-size: .8rem;
+  }
+  .progress-bar{
+    grid-area: progress-bar;
+    margin-top: .25rem;
+  }
+}

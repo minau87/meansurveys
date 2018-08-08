@@ -1,0 +1,17 @@
+@import "../styles/_mixins.scss";
+.not-found-container{
+  .not-found-message-wrapper{
+    height: calc(100vh - 64px - 60px - 60px);
+    display: grid;
+    grid-template-areas: 
+    ". . ."
+    ". not-found-message ."
+    ". . .";
+    .not-found-message{
+      grid-area: not-found-message;
+      color: $primary;
+      text-align: center;
+      vertical-align: middle;
+    }  
+  }
+}

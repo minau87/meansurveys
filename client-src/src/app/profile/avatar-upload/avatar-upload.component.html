@@ -1,0 +1,18 @@
+<div class="avatar-upload-wrapper">
+  <div class="file-select-section">
+    <input #fileInputField type="file" (change)="onChooseFile($event)" accept=".jpg,.png">
+    <button mat-raised-button (click)="fileInputField.click()">
+      <mat-icon>folder_open</mat-icon>  Choose file
+    </button>
+  </div>
+  <div class="file-upload-section">
+    <button mat-stroked-button (click)="onFileUpload()">
+      <mat-icon>cloud_upload</mat-icon> Upload
+    </button>
+  </div>
+  <div *ngIf="fileName" class="file-name-label">
+    File: {{ fileName }}
+  </div>
+  <mat-progress-bar *ngIf="uploadProgress" class="progress-bar" mode="determinate" value="{{uploadProgress}}" color="warn"></mat-progress-bar>
+</div>
+<span *ngIf="uploadProgress">{{ uploadProgress }}</span>
