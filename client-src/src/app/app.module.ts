@@ -7,6 +7,9 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+// ngx-highlightjs
+import { HighlightModule } from 'ngx-highlightjs';
+
 // Component imports
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -36,12 +39,18 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { AvatarUploadComponent } from './profile/avatar-upload/avatar-upload.component';
+import { AddQuestionComponent } from './create-survey/add-question/add-question.component';
 
 // @oauth/angular-jwt
 export function tokenGetter() {
   // console.log('tokenGetter:', localStorage.getItem('id_token'));
   return localStorage.getItem('id_token');
 }
+
+// Highlightjs options
+const hsjsOptions = {
+  theme: 'agate'
+};
 
 // Main application module. Bundles all the relevant components and makes them available.
 @NgModule({
@@ -58,7 +67,8 @@ export function tokenGetter() {
     WelcomeComponent,
     RegisterComponent,
     LoginComponent,
-    AvatarUploadComponent
+    AvatarUploadComponent,
+    AddQuestionComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +85,8 @@ export function tokenGetter() {
         tokenGetter: tokenGetter,
         authScheme: 'bearer'
       }
-    })
+    }),
+    HighlightModule.forRoot(hsjsOptions)
   ],
   providers: [
     SurveyService,

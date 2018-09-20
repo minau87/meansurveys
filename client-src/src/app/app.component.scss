@@ -17,12 +17,12 @@
     top: 0;
     left: 0;
     right: 0;
-    // width: 100%;
+    z-index: 1;
   }
   .router-container{
     grid-area: router-container;
     // padding: .5rem;
-    min-height: calc(100vh - 64px - 60px);
+    min-height: calc(100vh - 64px);
   }
   .app-footer{
     grid-area: app-footer;
@@ -33,6 +33,10 @@
     align-items: center;
     text-align: center;
     color: set-text-color($primary);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     .cr-notice{
       flex: 1;
       font-size: .7rem;

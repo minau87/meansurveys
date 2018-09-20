@@ -1,0 +1,25 @@
+<div class="cs-container">
+
+  <div class="cs-editor-section">
+
+  </div>
+
+  <div class="cs-preview-section">
+    
+  </div>
+
+
+
+  <mat-form-field appearance="legacy">
+    <mat-label>Survey title</mat-label>
+    <input type="text" matInput placeholder="Enter the survey's title here" [(ngModel)]="survey.name">
+  </mat-form-field>
+
+  <button mat-stroked-button (click)="addQuestion()">Add question</button>
+
+
+</div>
+
+<pre>
+  <code highlight [code]="survey | json"></code>
+</pre>

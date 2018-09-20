@@ -26,7 +26,8 @@ import {
   MatDividerModule,
   MatProgressSpinnerModule,
   MatSnackBarModule,
-  MatSliderModule
+  MatSliderModule,
+  MatRadioModule
 } from '@angular/material';
 
 // Einbindung aller benötigter Material-Design-Komponenten
@@ -56,7 +57,8 @@ import {
     MatDividerModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    MatSliderModule
+    MatSliderModule,
+    MatRadioModule
   ],
   exports: [
     MatButtonModule,
@@ -82,7 +84,8 @@ import {
     MatDividerModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    MatSliderModule
+    MatSliderModule,
+    MatRadioModule
   ],
   providers: []
 })

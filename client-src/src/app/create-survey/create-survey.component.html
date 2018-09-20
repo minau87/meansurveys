@@ -1,35 +1,84 @@
-<div class="create-survey-container">
-  <h2 class="heading main-heading">
-    Create
-    <h4 class="sub-heading">a new survey</h4>
-  </h2>
-  <div class="create-survey-editor">
-    <h4>Editor</h4>
-    <mat-divider></mat-divider>
-
-    <div class="editor-element">
-      <div class="editor-element-label">Is this a limited time survey?</div>
-      <mat-slide-toggle [(ngModel)]="isLimitedSurvey" [color]="toggleConfig.color" [checked]="toggleConfig.checked" (change)="onLimitedSurveyValueChange()">
-        <span *ngIf="isLimitedSurvey">Yes</span>
-        <span *ngIf="!isLimitedSurvey">No</span>
-      </mat-slide-toggle>
+<div class="cs-container">
+  <!-- Editor section -->
+  <div class="cs-editor-section">
+    <div class="cs-section-heading">
+      <h4>Editor</h4>
+      <mat-divider></mat-divider>
+    </div>
+    <!-- Limit how long a survey should last -->
+    <div class="cs-limit-survey-area">
+      <div class="cs-element cs-limited-toggle">
+        <div class="cs-label">
+          Should this survey be limited in time?
+        </div>
+        <mat-slide-toggle [(ngModel)]="survey.isLimited" [color]="toggleConfig.color" [checked]="toggleConfig.checked" (change)="onLimitedSurveyValueChange()">
+          <span *ngIf="survey.isLimited">Yes</span>
+          <span *ngIf="!survey.isLimited">No</span>
+        </mat-slide-toggle>
+      </div>
+      <div *ngIf="survey.isLimited" class="cs-element cs-limited-slider">
+        <div class="cs-label">
+          How many days should your survey last?: {{ daysSurveyLasts }} Day(s)
+        </div>
+        <mat-slider [max]="sliderConfig.max" [min]="sliderConfig.min" [step]="sliderConfig.stepSize" [thumbLabel]="sliderConfig.thumbLabel"
+          [(ngModel)]="daysSurveyLasts" [color]="sliderConfig.color" (change)="onSurveyDurationChanged($event)">
+        </mat-slider>
+        <div *ngIf="survey.endDate" class="cs-label-after">
+          Survey ends on: {{survey.endDate | date }}
+        </div>
+      </div>
+    </div>
+    <!-- Survey settings section -->
+    <div class="cs-question-settings-area">
+      <div class="cs-add-question-button">
+        <div class="cs-element">
+          <div class="cs-label">Click to add the question</div>
+          <button mat-stroked-button color="primary" (click)="addQuestion()">
+            <mat-icon>note_add</mat-icon> Add new question
+          </button>
+        </div>
+      </div>
+      <!-- Visual representation of added questions -->
+      <div class="cs-question-counter">
+        <div *ngIf="survey.questions" class="cs-element">
+          <span *ngIf="survey.questions.length > 0" class="cs-label">Questions:</span>
+          <div *ngIf="survey.questions.length > 0">
+            <a *ngFor="let q of survey.questions; let i = index;" (click)="currentQuestion = i;" [ngClass]="{'question-active': currentQuestion === i }"
+              class="question-index-label">
+              {{ i + 1 }}
+            </a>
+          </div>
+          <div *ngIf="survey.questions.length === 0">
+            No questions yet.
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Input for question -->
+    <div class="cs-question-input-area">
+      <div class="cs-element" *ngIf="survey.questions.length > 0">
+        <app-add-question 
+          [question]="survey.questions[currentQuestion]" 
+          (questionTypeChange)="onQuestionTypeChange($event)" 
+          (answerAdded)="onAnswerAdded($event)"
+          (textAnswerAdded)="onTextAnswerAdded($event)">
+        </app-add-question>
+      </div>
     </div>
 
-    <div *ngIf="isLimitedSurvey" class="editor-element">
-      <div class="editor-element-label">How many days should your survey be open?: {{ daysSurveyLasts }} Day(s)</div>
-      <mat-slider
-        [max]="sliderConfig.max"
-        [min]="sliderConfig.min"
-        [step]="sliderConfig.stepSize"
-        [thumbLabel]="sliderConfig.thumbLabel"
-        [(ngModel)]="daysSurveyLasts"
-        [color]="sliderConfig.color"
-      >
-      </mat-slider>      
-    </div>
   </div>
-  <div class="create-survey-preview">
-    <h4>Preview</h4>
-    <mat-divider></mat-divider>
+  <!-- Preview section -->
+  <div class="cs-preview-section">
+    <div class="section-heading">
+      <h4>Preview</h4>
+      <mat-divider></mat-divider>
+    </div>
+    <div class="preview-area">
+      <div *ngIf="survey.questions && survey.questions.length > 0">
+        <pre>
+          <code highlight [code]="survey | json"></code>
+        </pre>
+      </div>
+    </div>
   </div>
 </div>

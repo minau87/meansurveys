@@ -1,0 +1,43 @@
+<div class="edit-question-wrapper">
+  <!-- Question type section -->
+  <div class="cs-label">Choose a question type</div>
+  <mat-radio-group (change)="setQuestionType($event)" [(ngModel)]="currentQuestionType" class="type-radio-group">
+    <mat-radio-button *ngFor="let type of questionTypes" [value]="type.value" color="primary" class="type-radio-button">
+      {{ type.label }}
+    </mat-radio-button>
+  </mat-radio-group>
+
+  <!-- <mat-divider></mat-divider> -->
+
+  <div *ngIf="currentQuestionType">
+    <!-- Question -->
+    <mat-form-field appearance="standard">
+      <mat-label>Question</mat-label>
+      <textarea type="text" matInput [(ngModel)]="question.question" rows="2" placeholder="Enter your question"></textarea>
+    </mat-form-field>
+    <button mat-stroked-button (click)="addAnswerPossibility()" [ngClass]="{'add-button-hidden': (question.questionType === 'text')}">Add answer</button>
+    <!-- If currentQuestiontyp equal to 'text'-->
+    <div *ngIf="currentQuestionType === 'text'" class="answer-wrapper">
+      <!-- Do nothing here, since it's a free text answer-->
+      <i style="font-size: .8rem;">(Note: The answer field for a question type of <b>text</b> is added automatically.)</i>
+      <!-- <mat-form-field *ngFor="let answerPossibility of question.answerPossibilities; let i = index;" appearance="standard">
+        <mat-label>Answer {{ i + 1 }}</mat-label>
+        <input type="text" matInput (input)="setTextAnswer($event)" placeholder="Add your answer">
+      </mat-form-field> -->
+    </div>
+    <!-- If currentQuestiontyp equal to 'single' or 'multiple' -->
+    <div *ngIf="currentQuestionType === 'single' || currentQuestionType === 'multiple'">
+      <mat-form-field *ngFor="let answerPossibility of question.answerPossibilities; let i = index;" appearance="standard">
+        <mat-label>Option {{ i + 1 }}</mat-label>
+        <input type="text" matInput [(ngModel)]="question.answerPossibilities[i].answerPossibility" placeholder="Add your answer">
+      </mat-form-field>
+    </div>
+    <!-- If currentQuestiontyp equal to 'multiple'-->
+    <!-- <div *ngIf="currentQuestionType === 'multiple'">
+      <mat-form-field *ngFor="let answerPossibility of question.answerPossibilities; let i = index;" appearance="standard">
+        <mat-label>Option {{ i + 1 }}</mat-label>
+        <input type="text" matInput [(ngModel)]="question.answerPossibilities[i].answerPossibility" placeholder="Add your answer">
+      </mat-form-field>
+    </div> -->
+  </div>
+</div>

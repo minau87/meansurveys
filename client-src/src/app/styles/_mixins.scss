@@ -11,7 +11,7 @@ $warn:    mat-color($c-warn);
 
 $primary-text: #212121;
 $secondary-text: #757575;
-$background: #424242;
+$background: #333;
 
 /*Set the text color appropriate for background color*/
 @function set-text-color($color){

@@ -1,5 +1,5 @@
 export interface Survey {
-  _id: String;
+  _id?: String;
   endDate: Date;
   name: String;
   creator: Creator;
@@ -17,19 +17,36 @@ export interface Creator {
 }
 
 export interface Question {
-  questionId: Number;
+  questionId?: Number;
   questionType: String;
-  questions: String;
+  question: String;
   answerPossibilities: AnswerPossibility[];
 }
 
 export interface AnswerPossibility {
-  id: Number;
+  id?: Number;
   answerPossibility: String;
 }
 
 export interface Answer {
-  derp: String;
+  id?: Number;
+  // derp: String;
+}
+
+export interface TextAnswer extends Answer {
+  text: String;
+}
+
+export interface SingleChoiceAnswer extends Answer {
+  checked: Number;
+}
+
+export interface MultipleChoiceAnswer extends Answer {
+  checked: Number[];
+}
+
+export interface ScaleAnswer extends Answer {
+  checked: Number;
 }
 
 export interface SurveyResponse {
