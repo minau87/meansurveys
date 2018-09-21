@@ -7,6 +7,7 @@ const passport = require('passport');
 // Create a new survey (protected)
 // surveyRouter.post('/', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 surveyRouter.post('/', (req, res, next) => {
+  console.log('RQST:', req);
   let newSurvey = new Survey({
     name: req.body.name,
     creator: req.body.creator,
@@ -17,6 +18,7 @@ surveyRouter.post('/', (req, res, next) => {
     questions: req.body.questions,
     answers: []
   });
+  console.log('newSurvey:', newSurvey);
   // Increment the ID of each question and answerpossibility
   newSurvey.questions.forEach((question, questionIndex) => {
     // Set the questionId to the current questionIndex
@@ -28,6 +30,7 @@ surveyRouter.post('/', (req, res, next) => {
   });
   Survey.createSurvey(newSurvey, (err, survey) => {
     if (err) {
+      console.log('error:', err);
       // Send an error message when survey could not be created
       res.json({
         success: false,

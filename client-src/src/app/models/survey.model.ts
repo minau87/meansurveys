@@ -52,6 +52,7 @@ export interface ScaleAnswer extends Answer {
 export interface SurveyResponse {
   success: Boolean;
   msg: String;
+  _id?: String;
   surveys?: Survey[];
   survey?: Survey;
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Survey, Question, AnswerPossibility } from '../models/survey.model';
+import { Survey, Question, AnswerPossibility, SurveyResponse } from '../models/survey.model';
 import { AuthService } from '../services/auth.service';
 import { SurveyService } from '../services/survey.service';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-survey',
@@ -13,8 +14,9 @@ export class CreateSurveyComponent implements OnInit {
 
   constructor(
     private _authService: AuthService,
-    private _surveyServce: SurveyService,
-    private _fb: FormBuilder
+    private _surveyService: SurveyService,
+    private _fb: FormBuilder,
+    private _router: Router
   ) { }
 
   // Form for adding answer possibilities
@@ -80,6 +82,32 @@ export class CreateSurveyComponent implements OnInit {
 
   addAnswerPossibility() {
 
+  }
+
+  createSurvey() {
+    this._surveyService.createSurvey(this.survey).subscribe((res) => {
+      if(res){
+        console.log('response:', res);
+        // Navigate to survey details when creation was successful
+        this._router.navigate(['/survey', res._id]);
+      } else {
+        console.log('No response received.')
+      }
+    }, (err) => {
+      if(err){
+        console.log('an error occured:', err);
+      }
+    })
+  }
+
+  checkSurveyValidity(){
+    if(!this.survey.questions || this.survey.questions.length == 0) {
+      return true;
+    }
+    if(!this.survey.name || this.survey.name.length == 0) {
+      return true;
+    }
+    return false;
   }
 
   setType($event) {

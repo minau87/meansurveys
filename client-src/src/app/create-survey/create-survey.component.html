@@ -5,6 +5,18 @@
       <h4>Editor</h4>
       <mat-divider></mat-divider>
     </div>
+    <!-- Give the survey a title -->
+    <div class="cs-survey-name-area">
+      <div class="cs-element">
+        <div class="cs-label">
+          What should the title of your survey be?
+        </div>
+        <!-- Input -->
+        <mat-form-field>
+          <input type="text" matInput [(ngModel)]="survey.name" placeholder="Survey title">
+        </mat-form-field>
+      </div>
+    </div>
     <!-- Limit how long a survey should last -->
     <div class="cs-limit-survey-area">
       <div class="cs-element cs-limited-toggle">
@@ -45,11 +57,11 @@
           <div *ngIf="survey.questions.length > 0">
             <a *ngFor="let q of survey.questions; let i = index;" (click)="currentQuestion = i;" [ngClass]="{'question-active': currentQuestion === i }"
               class="question-index-label">
-              {{ i + 1 }}
+              # of questions: {{ i + 1 }}
             </a>
           </div>
           <div *ngIf="survey.questions.length === 0">
-            No questions yet.
+            # of questions: No questions yet.
           </div>
         </div>
       </div>
@@ -63,6 +75,14 @@
           (answerAdded)="onAnswerAdded($event)"
           (textAnswerAdded)="onTextAnswerAdded($event)">
         </app-add-question>
+      </div>
+    </div>
+    <!-- Submit survey area -->
+    <div class="cs-submit-survey-area">
+      <div class="cs-element">
+        <button [disabled]="checkSurveyValidity()" mat-stroked-button color="primary" (click)="createSurvey()">
+          Submit Survey
+        </button>
       </div>
     </div>
 

@@ -10,17 +10,27 @@
     display: grid;
     grid-template-areas: 
     "cs-section-heading" 
+    "cs-survey-name-area"
     "cs-limit-survey-area" 
     "cs-question-settings-area" 
     // "cs-question-counter-area" 
-    "cs-question-input-area";
+    "cs-question-input-area"
+    "cs-submit-survey-area";
     grid-template-columns: 1fr;
     grid-gap: 0.5rem;
-    grid-template-rows: 60px 50px 60px auto;
+    grid-template-rows: 60px 70px 50px 60px 60px auto;
     padding: 0px 0px 0px 16px;
     .cs-section-heading {
       grid-area: cs-section-heading;
       margin-bottom: 16px;
+    }
+    .cs-survey-name-area {
+      grid-area: cs-survey-name-area;
+      width: 100%;
+      mat-form-field{
+        width: 100%;
+      }
+      // margin-bottom: .5rem;
     }
     .cs-limit-survey-area {
       grid-area: cs-limit-survey-area;
@@ -99,6 +109,9 @@
           box-sizing: border-box;
         }
       }
+    }
+    .cs-submit-survey-area{
+      grid-area: cs-submit-survey-area;
     }
   }
   .cs-preview-section {
