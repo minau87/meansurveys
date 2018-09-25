@@ -1,3 +1,5 @@
+// Serves as a overview over some of the currently logged in users data
+
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
@@ -41,7 +43,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.setUser(profile);
       }, (err) => {
         setTimeout(() => {
-          console.log(err);
           this._snackbar.open('An error occured: Status: ' + err.status + ' Message: ' + err.error.msg + '. Try again.', 'Dismiss');
         }, 0);
         this._router.navigate(['/login']);
@@ -50,6 +51,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Sets the currently active user
   setUser(profile: ProfileResponse) {
     this.user = {
       username: profile.user.username,
@@ -61,17 +63,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
     };
   }
 
+  // Shows a popup at the bottom when a choosen file type is not allowed
   onFileNotAllowed($event) {
-    console.log($event);
     this._snackbar.open('Sorry, but you can only choose a .png or .jpg-File.', 'Got it!');
   }
 
+  // Submits the choose profile picture
   onFileUpload($event) {
-    // console.log('Image:', $event);
     this.uploadPictureSub = this._authService.updateProfilePicture($event).subscribe((event) => {
-      console.log('event:', event);
       if (event.type === HttpEventType.UploadProgress) {
-        console.log('Upload Progress: ' + Math.round(event.loaded / event.total * 100) + '%');
         this.uploadProgress = Math.round(event.loaded / event.total * 100);
       } else if (event.type === HttpEventType.Response) {
         this.paramsSub = this._route.params.subscribe((params) => {
@@ -80,7 +80,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
             this.setUser(profile);
           }, (err) => {
             setTimeout(() => {
-              console.log(err);
               this._snackbar.open('An error occured: Status: ' + err.status + ' Message: ' + err.error.msg + '. Try again.', 'Dismiss');
             }, 0);
             return false;
@@ -89,21 +88,23 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this._snackbar.open('Picture updated!', '', { duration: 3000 });
       }
     }, (err) => {
-      console.log(err);
+      // Do nothing for now
     });
   }
 
+  // Shows a popup at the bottom of the screen when the choosen file is too big
   onFileTooBig($event) {
     this._snackbar.open(
       `Sorry, this file is too big (${$event} MB). Choose a file that's not bigger than ${this.maxFileSize} MB.`, 'Got it!'
     );
   }
 
+  // Gets the image data
   getImage(binaryImage) {
-    console.log(btoa(binaryImage.data));
     return 'data:image/png;base64,' + btoa(binaryImage.data);
   }
 
+  // Properly clean up all active subscriptions
   ngOnDestroy() {
     if (this.getProfileSub) {
       this.getProfileSub.unsubscribe();

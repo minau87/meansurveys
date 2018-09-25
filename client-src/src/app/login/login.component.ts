@@ -31,16 +31,15 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
+  // Initializes the login process of a user
   login() {
     const credentials = {
       username: this.loginForm.value.username,
       password: this.loginForm.value.password
     };
-    // console.log(credentials);
     this.loginSub = this._authService.authenticateUser(credentials).subscribe((res: LoginResponse) => {
       if (res.success) {
         // Set token in local storage
-        // console.log(res.user);
         this._authService.storeUserData(<string>res.token, res.user);
         // Navigate to profile
         this._router.navigate([`/profile/${res.user._id}`]);
@@ -54,10 +53,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Navigates to the registration form
   navigateToRegister() {
     this._router.navigate(['/register']);
   }
 
+  // Properly clean up all active subscriptions
   ngOnDestroy() {
     if (this.loginSub) {
       this.loginSub.unsubscribe();

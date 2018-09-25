@@ -2,6 +2,8 @@
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// Defines environment attributes such as the available API Endpoints
+
 const apiBaseUrl = 'http://localhost:3000/api';
 const authUrl = 'http://localhost:3000/auth';
 

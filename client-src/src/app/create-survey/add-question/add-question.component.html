@@ -7,8 +7,6 @@
     </mat-radio-button>
   </mat-radio-group>
 
-  <!-- <mat-divider></mat-divider> -->
-
   <div *ngIf="currentQuestionType">
     <!-- Question -->
     <mat-form-field appearance="standard">
@@ -20,10 +18,6 @@
     <div *ngIf="currentQuestionType === 'text'" class="answer-wrapper">
       <!-- Do nothing here, since it's a free text answer-->
       <i style="font-size: .8rem;">(Note: The answer field for a question type of <b>text</b> is added automatically.)</i>
-      <!-- <mat-form-field *ngFor="let answerPossibility of question.answerPossibilities; let i = index;" appearance="standard">
-        <mat-label>Answer {{ i + 1 }}</mat-label>
-        <input type="text" matInput (input)="setTextAnswer($event)" placeholder="Add your answer">
-      </mat-form-field> -->
     </div>
     <!-- If currentQuestiontyp equal to 'single' or 'multiple' -->
     <div *ngIf="currentQuestionType === 'single' || currentQuestionType === 'multiple'">
@@ -32,12 +26,5 @@
         <input type="text" matInput [(ngModel)]="question.answerPossibilities[i].answerPossibility" placeholder="Add your answer">
       </mat-form-field>
     </div>
-    <!-- If currentQuestiontyp equal to 'multiple'-->
-    <!-- <div *ngIf="currentQuestionType === 'multiple'">
-      <mat-form-field *ngFor="let answerPossibility of question.answerPossibilities; let i = index;" appearance="standard">
-        <mat-label>Option {{ i + 1 }}</mat-label>
-        <input type="text" matInput [(ngModel)]="question.answerPossibilities[i].answerPossibility" placeholder="Add your answer">
-      </mat-form-field>
-    </div> -->
   </div>
 </div>

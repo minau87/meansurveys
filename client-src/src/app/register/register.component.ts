@@ -41,9 +41,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       username: this.userDataForm.value.username,
       password: this.userDataForm.value.password
     };
-    console.log(user);
     this.registerSub = this._authService.registerUser(user).subscribe((res: RegisterUserResponse) => {
-      console.log('Response:', res);
       if (res.success) {
         // Redirect
         this._router.navigate(['/login']);
@@ -56,6 +54,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Navigates to the login page
   navigateToLogin() {
     this._router.navigate(['/login']);
   }

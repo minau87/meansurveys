@@ -63,27 +63,6 @@ userRouter.get('/', (req, res, next) => {
   });
 });
 
-// Getting the profile data
-// userRouter.get('/profile', passport.authenticate('jwt', {
-//   session: false
-// }), (req, res, next) => {
-//   console.log("req:", req);
-//   console.log("res:", res);
-//   res.json({
-//     user: req.user
-//   });
-// });
-
-// userRouter.get('/profile', passport.authenticate('jwt', {
-//   session: false
-// }), permit('admin'), (req, res, next) => {
-//   // console.log("req:", req);
-//   // console.log("res:", res);
-//   res.json({
-//     user: req.user
-//   });
-// });
-
 // Get a single user by ID
 userRouter.get('/:id', passport.authenticate('jwt', {
   session: false
@@ -97,22 +76,13 @@ userRouter.get('/:id', passport.authenticate('jwt', {
 userRouter.put('/:id', (req, res, next) => {
   let userId = req.params.id;
   let updates = req.body;
-  // console.log(req.body.imageBase64);
   User.updateUser(userId, updates, {}, (err, user) => {
     if (err) {
-      console.log("Error updating picture...");
       res.json({
         success: false,
         msg: 'Could not update user.'
       });
     } else {
-      console.log("Updated picture...");
-      // res.json({
-      //   success: true,
-      //   msg: 'User updated.',
-      //   modified: user.nModified
-      // });
-      console.log("Sending response now.");
       res.json({
         success: true,
         msg: 'User updated.',
@@ -140,9 +110,8 @@ userRouter.delete('/:id', (req, res, next) => {
   });
 });
 
-// NEW!!!
+
 function requiresAdmin(req, res, next) {
-  console.log('requiresAdmin:', req.user);
   if (!req.user.admin) {
     // User not admin, then send 403
     res.status(403).json({

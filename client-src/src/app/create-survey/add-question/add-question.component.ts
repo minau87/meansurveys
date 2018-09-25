@@ -10,7 +10,6 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 export class AddQuestionComponent implements OnInit, OnChanges {
 
   questionForm: FormGroup;
-  // question: String = '';
   @Input('question') question: Question;
   @Input('currentQuestionIndex') currentQuestionIndex: Number;
   currentQuestionType = '';
@@ -20,6 +19,8 @@ export class AddQuestionComponent implements OnInit, OnChanges {
 
   @Output('answerAdded') answerAdded = new EventEmitter<AnswerPossibility>();
   @Output('textAnswerAdded') textAnswerAdded = new EventEmitter<String>();
+
+  // Defines the questiontypes available
   questionTypes = [
     { label: 'Text', value: 'text' },
     { label: 'Single', value: 'single' },
@@ -33,14 +34,12 @@ export class AddQuestionComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    console.log('question:', this.question);
     if (!this.question.question) {
       this.question.question = '';
     }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log('onChanges: changes:', changes);
     if (changes.question.currentValue.questionType.length === 0) {
       this.currentQuestionType = null;
     } else {
@@ -48,11 +47,13 @@ export class AddQuestionComponent implements OnInit, OnChanges {
     }
   }
 
+  // Sets the questionType for a new question
   setQuestionType($event) {
     this.currentQuestionType = $event.value;
     this.questionTypeChange.emit(this.currentQuestionType);
   }
 
+  // Adds answer possibilities to a question
   addAnswerPossibility() {
     let answerPossibility: AnswerPossibility = {
       answerPossibility: ''
@@ -60,6 +61,7 @@ export class AddQuestionComponent implements OnInit, OnChanges {
     this.answerAdded.emit(answerPossibility);
   }
 
+  // Emits an event when a text answer is added/changed
   setTextAnswer($event) {
     this.textAnswerAdded.emit($event.target.value);
   }

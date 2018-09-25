@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-// import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-navigation',
@@ -16,9 +15,9 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
     this.isNotLoggedIn = this._authService.isLoggedIn();
-    // console.log('this.isLoggedIn:', this.isNotLoggedIn);
   }
 
+  // Logs out a currently logged in user
   logout() {
     this._authService.logout();
     this._router.navigate(['/welcome']);

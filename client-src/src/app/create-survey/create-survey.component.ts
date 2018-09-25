@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-survey',
-  templateUrl: './create-survey2.component.html',
-  styleUrls: ['./create-survey2.component.scss']
+  templateUrl: './create-survey.component.html',
+  styleUrls: ['./create-survey.component.scss']
 })
 export class CreateSurveyComponent implements OnInit {
 
@@ -40,16 +40,16 @@ export class CreateSurveyComponent implements OnInit {
     color: 'primary'
   };
 
+  // Defines the available question types
   questionTypes = [
     { label: 'Text', value: 'text' },
     { label: 'Single', value: 'single' },
     { label: 'Multiple', value: 'multiple' }
   ];
+
   currentQuestion = 0;
   currentQuestionType = '';
-
   survey: Survey;
-
   daysSurveyLasts = 1;
 
   ngOnInit() {
@@ -69,6 +69,7 @@ export class CreateSurveyComponent implements OnInit {
     };
   }
 
+  // Adds a new question
   addQuestion() {
     this.currentQuestionType = null;
     const question: Question = {
@@ -80,26 +81,23 @@ export class CreateSurveyComponent implements OnInit {
     this.currentQuestion = this.survey.questions.length - 1;
   }
 
-  addAnswerPossibility() {
-
-  }
-
+  // Create the new survey
   createSurvey() {
     this._surveyService.createSurvey(this.survey).subscribe((res) => {
       if(res){
-        console.log('response:', res);
         // Navigate to survey details when creation was successful
         this._router.navigate(['/survey', res._id]);
       } else {
-        console.log('No response received.')
+        // Do nothing for now
       }
     }, (err) => {
       if(err){
-        console.log('an error occured:', err);
+        // Do nothing for now
       }
     })
   }
 
+  // Checks wether or not a survey is valid - only then a survey can be submitted - or not
   checkSurveyValidity(){
     if(!this.survey.questions || this.survey.questions.length == 0) {
       return true;
@@ -110,13 +108,13 @@ export class CreateSurveyComponent implements OnInit {
     return false;
   }
 
+  // Sets the questionType of the current question
   setType($event) {
-    console.log($event.value);
     this.currentQuestionType = $event.value;
     this.survey.questions[this.currentQuestion].questionType = this.currentQuestionType;
   }
 
-
+  // Reacts to changes to the isLimited property of the survey, which decides wether or not the survey should be limited in time
   onLimitedSurveyValueChange() {
     this.survey.isLimited = this.survey.isLimited ? true : false;
     if (this.survey.isLimited === false) {
@@ -124,17 +122,19 @@ export class CreateSurveyComponent implements OnInit {
     }
   }
 
+  // Reacts to changes to the duration of the survey when the survey is limited in time
   onSurveyDurationChanged($event) {
     let endDate = new Date();
     endDate.setDate(endDate.getDate() + $event.value);
     this.survey.endDate = endDate;
   }
 
+  // Reacts to changes to a question
   onQuestionEdited($event) {
-    console.log('onQuestionEdited:', $event);
     this.survey.questions[this.currentQuestion] = $event;
   }
 
+  // Reacts to changes of the questionType property of a question
   onQuestionTypeChange($event) {
     if ($event === 'text') {
       let answerPossibility: AnswerPossibility = {
@@ -150,10 +150,14 @@ export class CreateSurveyComponent implements OnInit {
     this.survey.questions[this.currentQuestion].questionType = $event;
   }
 
+  // Adds a new answer possibility to the corresponding array
   onAnswerAdded($event) {
     this.survey.questions[this.currentQuestion].answerPossibilities.push($event);
   }
 
+  /*
+  * If the questionType is text, we need to clean up all answer possibilities that might have been added previously
+  */
   onTextAnswerAdded($event) {
     // Check if question type has changed later. If that's the case, delete every
     // answer possibility, except the first one.

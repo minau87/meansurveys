@@ -10,10 +10,9 @@
   <div class="survey-details">
     <h4>Details</h4>
     <mat-divider></mat-divider>
-    <h5>Description</h5>
-    <p>This survey is about Herp Derp.</p>
-    <mat-divider></mat-divider>
-    <h5>Status</h5>
+
+    <p> </p>
+
     <table mat-table [dataSource]="surveyToArray()" class="survey-table mat-elevation-z8" matSort matSortActive="startDate" matSortDisableClear
       matSortDirection="asc">
 
@@ -69,9 +68,7 @@
                         [data]="chartConfig.pieChartData"
                         [labels]="chartConfig.pieChartLabels"
                         [chartType]="chartConfig.pieChartType"
-                        [legend]="chartConfig.displayLegend"
-                        (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"></canvas>
+                        [legend]="chartConfig.displayLegend"></canvas>
               </div>
         </div>
         <div *ngIf="!viewAsChart">

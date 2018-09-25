@@ -1,3 +1,5 @@
+// Displays a list of all available surveys
+
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Survey, SurveyResponse } from '../models/survey.model';
@@ -25,15 +27,13 @@ export class SurveyListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.surveysSub = this._surveyService.getSurveys().subscribe((res: SurveyResponse) => {
-      // console.log('Surveys:', res.surveys);
       this.surveys = res.surveys;
       window.setTimeout(() => {
         this.loading = false;
-        // console.log('Time is up.');
       }, 10000);
       this.loading = false;
     }, (err) => {
-      console.log('Error getting Surveys:', err);
+      // Do nothing for now
     });
   }
 

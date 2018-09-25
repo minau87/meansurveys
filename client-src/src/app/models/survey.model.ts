@@ -1,3 +1,5 @@
+// Defines the models representing a survey and all other relevant interfaces
+
 export interface Survey {
   _id?: String;
   endDate: Date;
@@ -32,7 +34,6 @@ export interface AnswerPossibility {
 export interface Answer {
   questionId?: Number;
   answers?: any;
-  // answer: any;
 }
 
 export interface AnswerSet {

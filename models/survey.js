@@ -50,22 +50,8 @@ const questionSchema = mongoose.Schema({
     _id: false
   });
 
-// Schema for an answer
-// const answerSchema = mongoose.Schema({
-//   forQuestion: {
-//     type: Number
-//   },
-//   answers: [{
-//     type: mongoose.Schema.Types.Array
-//   }]
-// }, {
-//   _id: false
-// });
-
+// Schema for an answer set
 const answerSchema = mongoose.Schema({
-  // forQuestion: {
-  //   type: Number
-  // },
   answers: [{
     type: Object
   }]
@@ -179,8 +165,6 @@ module.exports.addAnswers = (id, body, options, callback) => {
   const selector = {
     _id: id
   };
-  console.log('answerSet', body.answerSet);
-  // let a = { answers: answerSet };
   const modifier = {
     $inc: {
       participantsCount: 1
@@ -190,8 +174,6 @@ module.exports.addAnswers = (id, body, options, callback) => {
       participants: body.from
     }
   };
-  // modifier.$push = answerSet;
-  // console.log('modifier: ', modifier);
   Survey.update(selector, modifier, options, callback);
 }
 

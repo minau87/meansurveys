@@ -1,3 +1,4 @@
+// Bundles the routes of the front end application
 import { AboutComponent } from '../about/about.component';
 import { AnswerSurveyComponent } from '../answer-survey/answer-survey.component';
 import { CreateSurveyComponent } from '../create-survey/create-survey.component';

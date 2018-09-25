@@ -6,6 +6,7 @@
   "survey-details survey-results"
   "survey-participate survey-participate";
   grid-template-columns: 2fr 2fr;
+  grid-template-rows: auto 1fr auto;
   grid-gap: .5rem;
   .heading{
     grid-area: heading;

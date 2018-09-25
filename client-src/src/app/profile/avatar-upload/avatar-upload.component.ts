@@ -1,3 +1,4 @@
+// Provides a functionality for uploading a profile picture
 import {
   Component,
   OnInit,
@@ -71,6 +72,7 @@ export class AvatarUploadComponent implements OnInit, OnChanges {
     this.readFile();
   }
 
+  // Emits the choosen picture as a base64 encoded string
   onFileUpload() {
     // If no image is set, return
     if (!this.imageBase64) {
@@ -82,6 +84,7 @@ export class AvatarUploadComponent implements OnInit, OnChanges {
     this.imageBase64 = undefined;
   }
 
+  // Checks wether or not the tpye of the selected file is allowed or not
   isFileTypeAllowed() {
     // If the array has a length of zero, all types are allowed, therefore return true
     if (this.allowedFileTypes.length === 0) {
@@ -104,6 +107,7 @@ export class AvatarUploadComponent implements OnInit, OnChanges {
     }
   }
 
+  // Reads a file as base64
   readFile(file?: any) {
     const f = file || this.fileInputField.nativeElement.files[0];
     const reader = new FileReader();

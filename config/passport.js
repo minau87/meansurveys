@@ -1,3 +1,5 @@
+// Configuration file for passport-jwt
+
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const User = require('../models/user');
@@ -8,9 +10,7 @@ module.exports = (passport) => {
   // Get Token from Authentication Header
   options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
   options.secretOrKey = dbconfig.secret;
-  console.log(options);
   passport.use(new JwtStrategy(options, (jwt_payload, done) => {
-    // console.log("jwt_payload:", jwt_payload);
     // Getting the user
     User.getUserById(jwt_payload.data._id, (err, user) => {
       if(err){

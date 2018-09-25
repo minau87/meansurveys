@@ -1,3 +1,5 @@
+// Bundels all modules of the Angular Material Library
+
 import { NgModule } from '@angular/core';
 
 import 'hammerjs';

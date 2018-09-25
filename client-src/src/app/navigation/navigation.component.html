@@ -1,12 +1,8 @@
 <mat-toolbar color="primary" id="navbar" class="mat-elevation-z4">
   <button type="button" mat-button color="secondary" routerLink="" routerLinkActive="active">
-    <!--<i class="material-icons md-24">home</i>-->
     <span class="branding">MEAN</span>
     <span>Surveys</span>
   </button>
-  <!-- <button type="button" mat-button matTooltip="Create a new survey and show existing ones!" routerLink="/surveys" routerLinkActive="active">
-    <i class="material-icons md-24">assignment</i> Surveys
-  </button> -->
 
   <mat-menu #surveyMenu="matMenu">
     <button *ngIf="_authService.isAdmin()" mat-menu-item type="button" matTooltip="Create a new Survey" routerLink="/create-survey" routerLinkActive="active">
@@ -33,13 +29,9 @@
   </mat-menu>
 
   <mat-menu #subMenu="matMenu">
-    <!-- <button mat-menu-item href="https://github.com/minau87/meansurveys">
-        <mat-icon>device_hub</mat-icon> API Endpoints
-      </button> -->
     <a mat-menu-item target="_blank" rel="noopener noreferrer" href="https://github.com/minau87/meansurveys#rest-api-documentation">
       <mat-icon>device_hub</mat-icon> API Endpoints
     </a>
-    <!-- Not yet implemented-->
     <a mat-menu-item target="_blank" rel="noopener noreferrer" href="https://github.com/minau87/meansurveys#meansurveys">
       <mat-icon>help</mat-icon> Documentation
     </a>

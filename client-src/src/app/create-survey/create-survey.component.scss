@@ -9,20 +9,28 @@
     grid-area: cs-editor-section;
     display: grid;
     grid-template-areas: 
-    "cs-section-heading" 
+    "cs-section-heading"
+    "cs-survey-toolbar-area"
     "cs-survey-name-area"
     "cs-limit-survey-area" 
     "cs-question-settings-area" 
     // "cs-question-counter-area" 
-    "cs-question-input-area"
-    "cs-submit-survey-area";
+    "cs-question-input-area";
     grid-template-columns: 1fr;
     grid-gap: 0.5rem;
-    grid-template-rows: 60px 70px 50px 60px auto auto;
+    grid-template-rows: 60px 60px 80px 60px 60px auto;
+    // grid-auto-rows: min-content;
     padding: 0px 0px 0px 16px;
     .cs-section-heading {
       grid-area: cs-section-heading;
       margin-bottom: 16px;
+    }
+    .cs-survey-toolbar-area{
+      grid-area: cs-survey-toolbar-area;
+      button:nth-child(2){
+        margin-left: .5rem;
+      }
+      margin-bottom: .5rem;
     }
     .cs-survey-name-area {
       grid-area: cs-survey-name-area;
@@ -51,9 +59,9 @@
     .cs-question-settings-area {
       grid-area: cs-question-settings-area;
       display: grid;
-      grid-template-areas: "cs-add-question-button cs-question-counter"; 
-      grid-template-columns: 1fr 2fr;
-      grid-gap: 0.5rem;
+      grid-template-areas: "cs-question-counter"; 
+      // grid-template-columns: 1fr 2fr;
+      // grid-gap: 0.5rem;
       // .cs-question-type-radio{
       //   grid-area: cs-question-type-radio;
       // } 

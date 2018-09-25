@@ -1,3 +1,5 @@
+// Provides a detailed view for a specific survey with, if existing, results for that survey
+
 import { Component, OnInit, OnDestroy, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
@@ -51,7 +53,6 @@ export class SurveyDetailComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     this.paramsSub = this._route.params.subscribe((params) => {
       this.surveySub = this._surveyService.getSurvey(params.id).subscribe((res: SurveyResponse) => {
-        // console.log('Survey:', res.survey);
         this.survey = res.survey;
         this.setChartData();
         this.loading = false;
@@ -60,36 +61,32 @@ export class SurveyDetailComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes:SimpleChanges){
-    console.log('changes: ', changes);
+    // Might have to track changes in case input properties change. Check later.
   }
 
+  // Transforms a survey to an array that can be user within the Material Table component
   surveyToArray() {
     let dataSource = [];
     dataSource.push(this.survey);
     return dataSource;
   }
 
+  // Checks wether or not a user is allowed to participate in a survey
   canParticipate() {
     return (this.survey.participants.indexOf(this._authService.getUser()._id) !== -1) ? false : true;
   }
 
+  // Navigates to the participation component
   participate() {
     this._router.navigate(['/participate', this.survey._id]);
   }
 
+  // Navigates to the overview of all surveys
   navigateToOverview() {
     this._router.navigate(['/surveys']);
   }
 
-  // chart events
-  public chartClicked(e: any): void {
-    console.log(e);
-  }
-
-  public chartHovered(e: any): void {
-    console.log(e);
-  }
-
+  // Sets the data to be displayed for each question and chart
   setChartData() {
     this.chartConfig.chartLoading = true;
     let chartData = [];
@@ -106,11 +103,8 @@ export class SurveyDetailComponent implements OnInit, OnChanges, OnDestroy {
       this.chart.chart.config.data.labels = chartLabels;
     }
     this.chartConfig.pieChartLabels = chartLabels;
-    
-    // console.log('chartLabels:' + chartLabels);
 
     // If questionType == 'single', initialize the chartData-Array with the following values
-    // this.chartConfig.currentQuestion = 0; // Delete later
     if (this.survey.questions[this.chartConfig.currentQuestion].questionType == 'single') {
       for (let i = 0; i < chartData.length; i++) {
         chartData[i] = 0;
@@ -118,18 +112,15 @@ export class SurveyDetailComponent implements OnInit, OnChanges, OnDestroy {
       for (let answerSetIndex = 0; answerSetIndex < this.survey.answers.length; answerSetIndex++) {
         let answerSet = this.survey.answers[answerSetIndex];
         let answer = answerSet.answers[this.chartConfig.currentQuestion].checked;
-        // console.log(answer);
         for (let i = 0; i < chartData.length; i++) {
           if (answer == chartLabels[i]) {
             chartData[i]++;
           }
         }
-        // if(answer == chart)
       }
       if(this.chart && this.viewAsChart){
         this.chart.chart.config.data.labels
       }
-      // this.chart.chart.config.data.labels = chartLabels;
       this.chartConfig.pieChartData = chartData;
     }
 
@@ -141,7 +132,6 @@ export class SurveyDetailComponent implements OnInit, OnChanges, OnDestroy {
 
       for (let answerSetIndex = 0; answerSetIndex < this.survey.answers.length; answerSetIndex++) {
         let answerSet = this.survey.answers[answerSetIndex];
-        // console.log(answerSet.answers[this.chartConfig.currentQuestion].checked);
         let answer = answerSet.answers[this.chartConfig.currentQuestion].checked;
         for (let answerIndex = 0; answerIndex < answer.length; answerIndex++) {
           if (answer[answerIndex]) {
@@ -154,19 +144,14 @@ export class SurveyDetailComponent implements OnInit, OnChanges, OnDestroy {
     }
     // If questionType == 'text', initialize the chartData-Array with the following values
     if (this.survey.questions[this.chartConfig.currentQuestion].questionType == 'text') {
-      // let chartLabels = [];
       for (let i = 0; i < this.survey.answers.length; i++) {
         let answerSet = this.survey.answers[i].answers;
-        console.log('answerSet: ', answerSet);
         let answer = answerSet[this.chartConfig.currentQuestion].text;
-        console.log('answer:', answer);
-        // this.chartConfig.pieChartLabels = [];
-        // if (chartLabels.indexOf(answer, 0) !== -1) {
-        chartLabels.push(answer);
-        // }
+        if (chartLabels.indexOf(answer, 0) == -1) {
+          chartLabels.push(answer);
+        }
       }
       chartLabels.splice(0, 1);
-      console.log('chartLabels: ', chartLabels);
       let chartData = [];
       chartData.length = chartLabels.length;
       for (let i = 0; i < chartData.length; i++) {
@@ -180,19 +165,14 @@ export class SurveyDetailComponent implements OnInit, OnChanges, OnDestroy {
             chartData[j]++;
           }
         }
-        console.log('text-chartData: ', chartData);
       }
 
       this.chartConfig.pieChartData = chartData;
       if(this.chart && this.viewAsChart){
         this.chart.chart.config.data.labels = chartLabels;
       }
-      // this.chart.chart.config.data.labels = chartLabels;
     }
 
-    // console.log('chartData: ' + chartData);
-    // console.log('this.chartConfig.pieChartLabels: ' + this.chartConfig.pieChartLabels);
-    // console.log('this.chartConfig.pieChartData: ' + this.chartConfig.pieChartData);
     this.resultTableColumns = this.chartConfig.pieChartLabels;
     let tableData = Object.assign({}, this.chartConfig.pieChartData);
     this.resultTableData = [];
@@ -201,11 +181,12 @@ export class SurveyDetailComponent implements OnInit, OnChanges, OnDestroy {
     this.chartConfig.chartLoading = false;
   }
 
+  // Switches the result view from chart to table or table to chart
   switchResultView(){
     this.viewAsChart = this.viewAsChart ? false : true;
-    // console.log(this.resultTableData);
   }
 
+  // Switches to the next question within the survey
   nextQuestion() {
     if (this.survey.questions[this.chartConfig.currentQuestion + 1]) {
       this.chartConfig.currentQuestion++;
@@ -213,9 +194,9 @@ export class SurveyDetailComponent implements OnInit, OnChanges, OnDestroy {
       this.chartConfig.currentQuestion = 0;
     }
     this.setChartData();
-    // this.chart.chart.update();
   }
 
+  // Switches to the previous question within the survey
   previousQuestion() {
     if (this.survey.questions[this.chartConfig.currentQuestion - 1]) {
       this.chartConfig.currentQuestion--;
@@ -225,12 +206,16 @@ export class SurveyDetailComponent implements OnInit, OnChanges, OnDestroy {
     this.setChartData();
   }
 
+  // Properly clean up all active subscriptions
   ngOnDestroy() {
-    // Clean up subscription
-    this.paramsSub.unsubscribe();
-    this.paramsSub = undefined;
-    this.surveySub.unsubscribe();
-    this.surveySub = undefined;
+    if(this.paramsSub){
+      this.paramsSub.unsubscribe();
+      this.paramsSub = undefined;
+    }
+    if(this.surveySub){
+      this.surveySub.unsubscribe();
+      this.surveySub = undefined;
+    }
   }
 
 }

@@ -1,10 +1,23 @@
 <div class="cs-container">
+
   <!-- Editor section -->
   <div class="cs-editor-section">
+
     <div class="cs-section-heading">
       <h4>Editor</h4>
       <mat-divider></mat-divider>
     </div>
+
+    <!-- Toolbar area -->
+    <div class="cs-survey-toolbar-area">
+      <button mat-stroked-button color="primary" (click)="addQuestion()">
+        <mat-icon>note_add</mat-icon> Add new question
+      </button>
+      <button [disabled]="checkSurveyValidity()" mat-stroked-button color="primary" (click)="createSurvey()">
+        Submit Survey
+      </button>
+    </div>
+
     <!-- Give the survey a title -->
     <div class="cs-survey-name-area">
       <div class="cs-element">
@@ -17,6 +30,7 @@
         </mat-form-field>
       </div>
     </div>
+
     <!-- Limit how long a survey should last -->
     <div class="cs-limit-survey-area">
       <div class="cs-element cs-limited-toggle">
@@ -40,22 +54,15 @@
         </div>
       </div>
     </div>
+
     <!-- Survey settings section -->
     <div class="cs-question-settings-area">
-      <div class="cs-add-question-button">
-        <div class="cs-element">
-          <div class="cs-label">Click to add the question</div>
-          <button mat-stroked-button color="primary" (click)="addQuestion()">
-            <mat-icon>note_add</mat-icon> Add new question
-          </button>
-        </div>
-      </div>
       <!-- Visual representation of added questions -->
       <div class="cs-question-counter">
         <div *ngIf="survey.questions" class="cs-element">
           <span *ngIf="survey.questions.length > 0" class="cs-label">Questions:</span>
           <div *ngIf="survey.questions.length > 0">
-            # of questions: <a *ngFor="let q of survey.questions; let i = index;" (click)="currentQuestion = i;" [ngClass]="{'question-active': currentQuestion === i }"
+            <a *ngFor="let q of survey.questions; let i = index;" (click)="currentQuestion = i;" [ngClass]="{'question-active': currentQuestion === i }"
               class="question-index-label">
               {{ i + 1 }}
             </a>
@@ -66,23 +73,13 @@
         </div>
       </div>
     </div>
+
     <!-- Input for question -->
     <div class="cs-question-input-area">
       <div class="cs-element" *ngIf="survey.questions.length > 0">
-        <app-add-question 
-          [question]="survey.questions[currentQuestion]" 
-          (questionTypeChange)="onQuestionTypeChange($event)" 
-          (answerAdded)="onAnswerAdded($event)"
+        <app-add-question [question]="survey.questions[currentQuestion]" (questionTypeChange)="onQuestionTypeChange($event)" (answerAdded)="onAnswerAdded($event)"
           (textAnswerAdded)="onTextAnswerAdded($event)">
         </app-add-question>
-      </div>
-    </div>
-    <!-- Submit survey area -->
-    <div class="cs-submit-survey-area">
-      <div class="cs-element">
-        <button [disabled]="checkSurveyValidity()" mat-stroked-button color="primary" (click)="createSurvey()">
-          Submit Survey
-        </button>
       </div>
     </div>
 

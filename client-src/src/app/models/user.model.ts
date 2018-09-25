@@ -1,3 +1,5 @@
+// Defines the models representing a user and all other relevant interfaces
+
 export interface User {
   _id?: String;
   name?: String;

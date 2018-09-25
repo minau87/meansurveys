@@ -34,10 +34,7 @@ export class AnswerSurveyComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.paramsSub = this._route.params.subscribe((params) => {
       this.surveySub = this._surveyService.getSurvey(params.id).subscribe((res: SurveyResponse) => {
-        // console.log('Survey:', res.survey);
         this.currentQuestion = 0;
-        // this.answers.length = res.survey.questions.length;
-        // console.log("this.answers.lenght: " + this.answers.length);
         this.survey = res.survey;
         this.createAnswerSet();
         this.loading = false;
@@ -45,44 +42,33 @@ export class AnswerSurveyComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Toggles the data preview
   toggleDataPreview() {
     this.dataPreviewActive = this.dataPreviewActive ? false : true;
-    // console.log(this.getActiveStep());
-    // console.log(this.answers);
   }
 
+  // Switches to the next question of the survey
   addAnswer() {
     this.currentQuestion = this.getActiveStep();
-    console.log('addAnswer(): currentQuestion: ' + this.currentQuestion);
   }
 
+  // Reacts to changes to answers where the questionType is 'single'
   radioboxValueChanged($event) {
-    console.log($event);
     let currentQuestion = this.getActiveStep();
     this.answers[currentQuestion].checked = $event.value;
   }
 
+  // Reacts to changes to answers where the questionType is 'multiple'
   checkboxValueChanged($event, i) {
-    // console.log('checkBoxValueChanged: $event.checked: ', $event.checked);
-    // console.log('checkboxIndex:', i);
-    // console.log('this.answers[this.currentQuestion].checked[i]: ' + this.answers[this.currentQuestion].checked[i]);
-    // console.log('this.currentQuestion: ' + this.currentQuestion);
     this.answers[this.currentQuestion].checked[i] = $event.checked;
-    // This is neccessary in order to check wether or not the checkboxes have been touched
-    // this.answers[this.currentQuestion].checked.forEach(element => {
-    //   console.log(element);
-    //   if(element == undefined) {
-    //     element = false;
-    //   }
-    // });
     for (let j = 0; j < this.answers[this.currentQuestion].checked.length; j++) {
       if (this.answers[this.currentQuestion].checked[j] == undefined) {
         this.answers[this.currentQuestion].checked[j] = false;
       }
     }
-    // console.log(this.answers);
   }
 
+  // Creates an answer set which is populated with answers when users participate in a survey 
   createAnswerSet() {
     this.answers.length = this.survey.questions.length;
     this.survey.questions.forEach((question, qIndex) => {
@@ -90,30 +76,25 @@ export class AnswerSurveyComponent implements OnInit, OnDestroy {
         let answer: SingleChoiceAnswer = {
           checked: undefined
         };
-        // answer.checked = undefined;
         this.answers[qIndex] = answer;
       }
       if (question.questionType == 'multiple') {
         let answer: MultipleChoiceAnswer = {
           checked: []
         };
-        // answer.checked = [];
         answer.checked.length = question.answerPossibilities.length;
         for (let i = 0; i < answer.checked.length; i++) {
           answer.checked[i] = undefined;
         }
-        console.log('answerSet:', answer);
         this.answers[qIndex] = answer;
       }
       if (question.questionType == 'text') {
         let answer: TextAnswer = {
           text: ''
         };
-        // answer.text = '';
         this.answers[qIndex] = answer;
       }
     });
-    console.log(this.answers);
   }
 
   // Returns the currently active step (that is it's index) of the stepper
@@ -121,6 +102,7 @@ export class AnswerSurveyComponent implements OnInit, OnDestroy {
     return this.stepper.selectedIndex;
   }
 
+  // Checks wether or not a certain step has been completed by the user
   isStepCompleted(questionIndex) {
     if (this.survey.questions[questionIndex].questionType == 'single') {
       if (this.answers[questionIndex].checked == undefined) {
@@ -150,6 +132,7 @@ export class AnswerSurveyComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Completes the survey and submits the answers
   completeSurvey() {
     let answerSet: AnswerSet = {
       answers: this.answers
@@ -160,27 +143,29 @@ export class AnswerSurveyComponent implements OnInit, OnDestroy {
       answerSet: answerSet
     };
     this.updateSurveySub = this._surveyService.updateSurvey(this.survey._id, answer).subscribe((res: SurveyResponse) => {
-      // console.log('Response:', res);
       if (!res.success) {
-        console.log(res.msg);
+        // Do nothing for now
       } else {
         this._router.navigate(['/survey', this.survey._id]);
       }
       
     }, (err) => {
       if (err) {
-        console.log('Error:', err)
+        // Do nothing for now
       }
     })
   }
 
+  // Clean up all subscriptions
   ngOnDestroy() {
     this.paramsSub.unsubscribe();
     this.paramsSub = undefined;
     this.surveySub.unsubscribe();
     this.surveySub = undefined;
-    this.updateSurveySub.unsubscribe();
-    this.updateSurveySub = undefined;
+    if(this.updateSurveySub){
+      this.updateSurveySub.unsubscribe();
+      this.updateSurveySub = undefined;
+    }
   }
 
 }
