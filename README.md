@@ -34,11 +34,12 @@ the commandline by executing __mongod --version__ or __node -v__ respectively.
 
 # Setup
 
+0. (Download the app or clone via __git clone  https://github.com/minau87/meansurveys.git__ if you have [Git](https://git-scm.com/downloads) installed.)
 1. To get started, you first want to run __npm install__ in the MEANSurveys folder 
    to install all the dependencies.
 2. Next, to automatically update without having to restart the server each time, 
    we're using [nodemon](https://www.npmjs.com/package/nodemon). To install nodemon globally, use the __npm install -g nodemon__ command.
-3. Then we have to install the dependencies of our Angular app. For that, navigate into the client
+3. Then we have to install the dependencies of our Angular app. For that, navigate into the client-src
    folder and run __npm install__ again.
 4. Finally, we need to install the [Angular CLI](https://cli.angular.io/).
 
@@ -58,7 +59,7 @@ served from the public folder. Then all you have to do is
 3. Open your browser and enter __http://localhost:3000__.
 
 # Admin users and loading predefined test data
-By default, if you create an user via the registration, that user won't be an admin. Instead, there are two choices:
+By default, if you create an user via the registration, that user won't be an admin. Instead, there are two choices (close all open terminal windows first):
 
 1. Creating an user and manually altering the user's document within the users collection to include the following key-value-pair: __"role" : "admin"__
 2. Loading the backup file that's available in the meansurveys-folder.
