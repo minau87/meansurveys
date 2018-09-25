@@ -23,8 +23,8 @@ an option we consider.
 
 # Before you start
 Because it's a MEAN stack application, you want to make sure that you have
-* MongoDB	aswell as
-* NodeJS 
+* [MongoDB](https://www.mongodb.com/download-center#community)	aswell as
+* [NodeJS](https://nodejs.org/en/) 
 
 installed before continuing.
 
@@ -38,21 +38,37 @@ the commandline by executing __mongod --version__ or __node -v__ respectively.
    to install all the dependencies.
 2. Next, to automatically update without having to restart the server each time, 
    we're using [nodemon](https://www.npmjs.com/package/nodemon). To install nodemon globally, use the __npm install -g nodemon__ command.
-3. Finally we have to install the dependencies of our Angular app. For that, navigate into the client
+3. Then we have to install the dependencies of our Angular app. For that, navigate into the client
    folder and run __npm install__ again.
+4. Finally, we need to install the [Angular CLI](https://cli.angular.io/).
 
-# Starting the application
+# Starting the application during development
 During development, make sure that
 1. you have a MongoDB instance running,
   (e.g. via the __mongod__ command in your terminal, if you've added the \bin-folder to the path variable)
-2. you started the backend service via the __nodemon__ command	and
-3. you started the Angular app (from within the client-folder) via the __ng serve__ command.
+2. you started the backend service via the __nodemon__ command	(from within the meansurveys-folder) and
+3. you started the Angular app (from within the client-src-folder) via the __ng serve__ command (in a seperate terminal window).
 
+# Starting the application outside of development
 If you've built the Angular app via the __ng build__ command, all files will be 
 served from the public folder. Then all you have to do is
 
 1. Start a MongoDB instance
 2. Start the server via the __npm start__ command from within the MEANSurveys-folder.
+3. Open your browser and enter __http://localhost:3000__.
+
+# Admin users and loading predefined test data
+By default, if you create an user via the registration, that user won't be an admin. Instead, there are two choices:
+
+1. Creating an user and manually altering the user's document within the users collection to include the following key-value-pair: __"role" : "admin"__
+2. Loading the backup file that's available in the meansurveys-folder.
+
+The last point is the recommended approach. Inside the meansurveys-folder, open your terminal and paste in the following command: __mongorestore --db meansurveys db_backup/meansurveys__
+
+This will not only load a set of predefined users (username: admin, password: 123456 & username: user, password: 123456), but also a survey that's been answered
+numerous times to test the application. This survey can't be answered anymore, because the users mentioned above already took part in that particular survey.
+If you want to test participating in a survey, first log in with the admin-Account, create a new survey, participate if you want, log onto the user-account, participate again
+and look at the results.
 
 # REST-API documentation
 
@@ -73,7 +89,7 @@ served from the public folder. Then all you have to do is
 | ----------------- |:---------------| :------------------------------------------|
 | /api/surveys      | GET            | Returns all surveys                        |
 | /api/surveys      | POST           | Adds a new survey                          |
-| /api/surveys/:id  | PUT            | Updates the survey with ID :id             |
+| /api/surveys/:id  | POST           | Updates the survey with ID :id             |
 | /api/surveys/:id  | DELETE         | Removes the survey with the ID :id         |
 <hr>
 
