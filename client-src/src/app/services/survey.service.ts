@@ -28,10 +28,10 @@ export class SurveyService {
   }
 
   updateSurvey(_id: String, body: Object) {
-    const url = environment.endpoints.surveys.put + _id;
-    let headers: HttpHeaders;
+    const url = environment.endpoints.surveys.update + _id;
+    let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-    return this._http.put(url, body, { headers: headers });
+    return this._http.post(url, body, { headers: headers });
   }
 
   deleteSurvey(_id: String) {

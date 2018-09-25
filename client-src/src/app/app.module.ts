@@ -52,6 +52,9 @@ const hsjsOptions = {
   theme: 'agate'
 };
 
+// ng2-charts
+import { ChartsModule } from 'ng2-charts';
+
 // Main application module. Bundles all the relevant components and makes them available.
 @NgModule({
   declarations: [
@@ -86,7 +89,8 @@ const hsjsOptions = {
         authScheme: 'bearer'
       }
     }),
-    HighlightModule.forRoot(hsjsOptions)
+    HighlightModule.forRoot(hsjsOptions),
+    ChartsModule
   ],
   providers: [
     SurveyService,

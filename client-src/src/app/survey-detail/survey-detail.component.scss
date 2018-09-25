@@ -3,7 +3,8 @@
   display: grid;
   grid-template-areas: 
   "heading heading"
-  "survey-details survey-results";
+  "survey-details survey-results"
+  "survey-participate survey-participate";
   grid-template-columns: 2fr 2fr;
   grid-gap: .5rem;
   .heading{
@@ -19,5 +20,16 @@
   .survey-results{
     grid-area: survey-results;
     padding: 0rem 16px 0rem 0rem;
+    .survey-table{
+      width: 100%;
+    }
+  }
+  .survey-participation-area{
+    padding: 0rem 0rem 0rem 16px;
+    grid-area: survey-participate;
+    margin-bottom: 100px;
+    button:first-child{
+      margin-right: .5rem;
+    }
   }
 }

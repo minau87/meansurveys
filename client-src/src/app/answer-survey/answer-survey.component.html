@@ -1,3 +1,86 @@
-<p>
-  answer-survey works!
-</p>
+<div *ngIf="!loading">
+  <h2 class="heading main-heading">
+    {{ survey.name }}
+    <h4 class="sub-heading">by {{ survey.creator.username }}</h4>
+  </h2>
+  <div style="padding: 16px;">
+    <mat-vertical-stepper [linear]="true" #stepper style="margin-bottom: 1rem;">
+      <mat-step *ngFor="let question of survey.questions; let i = index;" [completed]="isStepCompleted(i)">
+        <ng-template matStepLabel>{{ question.question }}</ng-template>
+
+        <!-- questionType is single -->
+        <div *ngIf="question.questionType == 'single'">
+          <mat-radio-group (change)="radioboxValueChanged($event)">
+            <mat-radio-button *ngFor="let answer of question.answerPossibilities" [value]="answer.answerPossibility"
+              color="primary" style="margin-right: .5rem">{{ answer.answerPossibility }}</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <!-- questionType is multiple -->
+        <div *ngIf="question.questionType == 'multiple'">
+          <!-- <h5>{{ question.question }}</h5> -->
+          <mat-checkbox *ngFor="let answer of question.answerPossibilities; let i = index;" color="primary" style="margin-right: .5rem;" (change)="checkboxValueChanged($event, i)">{{
+            answer.answerPossibility }}</mat-checkbox>
+        </div>
+
+        <!-- questionType is text -->
+        <div *ngIf="question.questionType == 'text'">
+          <!-- <h5>{{ question.question }}</h5> -->
+          <mat-form-field style="width: 100%;" appearance="outline">
+            <input type="text" matInput placeholder="Your answer" [(ngModel)]="answers[i].text">
+          </mat-form-field>
+        </div>
+        <!-- Stepper control elements -->
+        <div style="margin-top: .5rem;">
+          <button *ngIf="!(i == 0)" mat-stroked-button matStepperPrevious color="warn" style="margin-right: .5rem;">Back</button>
+          <button *ngIf="i !== (survey.questions.length - 1)" [disabled]="!isStepCompleted(i)" mat-stroked-button matStepperNext color="primary" (click)="addAnswer()">Next</button>
+          <button *ngIf="i == (survey.questions.length - 1)" [disabled]="!isStepCompleted(i)" mat-stroked-button matStepperNext color="primary" (click)="completeSurvey()">Complete Survey</button>
+        </div>
+
+      </mat-step>
+    </mat-vertical-stepper>
+    <!-- Toggles a data preview - should be removed later -->
+    <button mat-stroked-button color="primary" (click)="toggleDataPreview()">Toggle Data Preview</button>
+    <div *ngIf="dataPreviewActive">
+      <div *ngIf="survey.questions && survey.questions.length > 0" style="margin-bottom: 100px;">
+        <pre>
+                  <code highlight [code]="survey | json"></code>
+                </pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <mat-vertical-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Fill out your name</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Fill out your address</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Address" formControlName="secondCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      You are now done.
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper> -->

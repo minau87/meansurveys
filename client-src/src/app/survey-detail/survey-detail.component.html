@@ -46,28 +46,58 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns" class="sl-header-row"></tr>
       <tr mat-row *matRowDef="let survey; columns: displayedColumns;"></tr>
     </table>
-    <!-- <p>
-      Open/Closed:
-      <span *ngIf="survey.status && survey.status == 'open'">open</span>
-      <span *ngIf="survey.status && survey.status == 'closed'">closed</span>
-      <br> Start date: {{survey.startDate | date}}
-      <br> End date:
-      <span *ngIf="survey.endDate"> {{survey.endDate | date}}</span>
-      <span *ngIf="!survey.endDate"> None</span>
-    </p>
-    <mat-divider></mat-divider>
-    <h5>Number of questions</h5>
-    <p>{{ survey.questions.length }}</p>
-    <mat-divider></mat-divider>
-    <h5>Number of participants</h5> -->
   </div>
   <!-- Container for survey results -->
   <div class="survey-results">
     <h4>Results</h4>
     <mat-divider></mat-divider>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos numquam libero accusantium corrupti facilis atque illum. Ad,
-    voluptatibus impedit? Quia minima voluptatibus, non maiores recusandae iusto optio velit et officiis!Quis accusamus excepturi
-    atque quo labore praesentium qui quibusdam eligendi sed, dignissimos nobis consequatur tempora odit, tenetur quidem dolor
-    porro perferendis aut architecto libero, adipisci vero reiciendis. Ipsam, animi molestias.
+    <div *ngIf="survey.answers.length > 0">
+        <h5>{{chartConfig.currentQuestion + 1}}. {{survey.questions[chartConfig.currentQuestion].question}}</h5>
+        <button color="primary" mat-icon-button (click)="previousQuestion()" style="margin-right: .5rem;" matTooltip="Previous question">
+          <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        <button color="primary" mat-icon-button (click)="nextQuestion()" matTooltip="Next question">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+        <button (click)="switchResultView()" color="warn" mat-icon-button matTooltip="Switch result view"> 
+          <mat-icon *ngIf="viewAsChart">table_chart</mat-icon>
+          <mat-icon *ngIf="!viewAsChart">pie_chart</mat-icon>
+        </button>
+        <div *ngIf="viewAsChart">
+            <div  style="display: block" *ngIf="chartConfig.pieChartLabels.length > 0">
+                <canvas baseChart #chart="base-chart"
+                        [data]="chartConfig.pieChartData"
+                        [labels]="chartConfig.pieChartLabels"
+                        [chartType]="chartConfig.pieChartType"
+                        [legend]="chartConfig.displayLegend"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+              </div>
+        </div>
+        <div *ngIf="!viewAsChart">
+          <h5>You are now looking at the raw data for the results of this question.</h5>
+          <table mat-table [dataSource]="resultTableData" class="survey-table mat-elevation-z8">
+            <ng-container [matColumnDef]="column" *ngFor="let column of resultTableColumns; let i = index;">
+              <th mat-header-cell *matHeaderCellDef> {{ column }} </th>
+              <td mat-cell *matCellDef="let element"> {{ element[i] }}</td>
+            </ng-container> 
+              
+            <tr mat-header-row *matHeaderRowDef="resultTableColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: resultTableColumns;"></tr>
+          </table>
+        </div>
+    </div>
+    <div *ngIf="survey.answers.length == 0">
+      <h5>No results yet!</h5>
+      <p>Noone has participated in this survey up until now.</p>
+    </div>
+  </div>
+  <div class="survey-participation-area">
+    <mat-divider></mat-divider>
+    <h5 *ngIf="!survey.isExpired && canParticipate() == true">If you want to participate in this survey, click the button below.</h5>
+    <h5 *ngIf="canParticipate() == false">You have already participated in this survey.</h5>
+    <h5 *ngIf="survey.isExpired">This survey has ended. You can't participate anymore.</h5>
+    <button color="primary" [disabled]="survey.isExpired || canParticipate() == false" (click)="participate()" mat-stroked-button style="margin-right: .5rem;">Participate</button>
+    <button color="warn" mat-stroked-button (click)="navigateToOverview()">Back</button>
   </div>
 </div>

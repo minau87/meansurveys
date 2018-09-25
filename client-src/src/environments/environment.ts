@@ -12,7 +12,7 @@ export const environment = {
       post: apiBaseUrl + '/surveys',
       get: apiBaseUrl + '/surveys',
       getOne: apiBaseUrl + '/surveys/',
-      put: apiBaseUrl + '/surveys/',
+      update: apiBaseUrl + '/surveys/',
       delete: apiBaseUrl + '/surveys/'
     },
     users: {

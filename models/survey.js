@@ -17,8 +17,8 @@ const creatorSchema = mongoose.Schema({
     type: String
   }
 }, {
-  _id: false
-});
+    _id: false
+  });
 
 // Schema for a single question
 const questionSchema = mongoose.Schema({
@@ -47,20 +47,29 @@ const questionSchema = mongoose.Schema({
     _id: false
   }]
 }, {
-  _id: false
-});
+    _id: false
+  });
 
 // Schema for an answer
+// const answerSchema = mongoose.Schema({
+//   forQuestion: {
+//     type: Number
+//   },
+//   answers: [{
+//     type: mongoose.Schema.Types.Array
+//   }]
+// }, {
+//   _id: false
+// });
+
 const answerSchema = mongoose.Schema({
-  forQuestion: {
-    type: Number
-  },
-  answers: {
-    type: mongoose.Schema.Types.Array
-  }
-}, {
-  _id: false
-});
+  // forQuestion: {
+  //   type: Number
+  // },
+  answers: [{
+    type: Object
+  }]
+})
 
 // Schema for a survey
 const surveySchema = mongoose.Schema({
@@ -86,8 +95,19 @@ const surveySchema = mongoose.Schema({
   participantsCount: {
     type: Number
   },
+  participants: {
+    type: [String]
+  },
+  // Wether or not the survey is expired
+  isExpired: {
+    type: Boolean,
+    default: false
+  },
   questions: [questionSchema],
-  answers: [answerSchema]
+  answers: []
+  // answers: {
+  //   type: Object
+  // }
 });
 
 // Making the Schema available outside of this module
@@ -151,6 +171,29 @@ module.exports.updateSurvey = (id, survey, options, callback) => {
 
   Survey.update(selector, modifier, options, callback);
 };
+
+/**
+ * Adds new answers to a survey
+ */
+module.exports.addAnswers = (id, body, options, callback) => {
+  const selector = {
+    _id: id
+  };
+  console.log('answerSet', body.answerSet);
+  // let a = { answers: answerSet };
+  const modifier = {
+    $inc: {
+      participantsCount: 1
+    },
+    $push: {
+      answers: body.answerSet,
+      participants: body.from
+    }
+  };
+  // modifier.$push = answerSet;
+  // console.log('modifier: ', modifier);
+  Survey.update(selector, modifier, options, callback);
+}
 
 /**
  * DELETE:

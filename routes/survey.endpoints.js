@@ -47,6 +47,81 @@ surveyRouter.post('/', (req, res, next) => {
   })
 });
 
+// Adds new answers to a survey
+surveyRouter.post('/:id', (req, res, next) => {
+  console.log('req.params:' + req.params);
+  let _id = req.params.id;
+  let body = req.body;
+  console.log('_id: ' + _id);
+  // console.log('answerSet', answerSet);
+  // res.json({
+  //   succes: true,
+  //   msg: 'Answers added.'
+  // });
+
+  Survey.findById(_id, (err, survey) => {
+    if(err){
+      res.json({
+        success: false,
+        msg: 'An internal error occured. Please try again.'
+      })
+    }
+    // if(!survey){
+    //   res.json({
+    //     success: false,
+    //     msg: 'The survey could not be found.'
+    //   })
+    // }
+    if(survey){
+      if(survey.participants.indexOf(body.from) !== -1){
+        res.json({
+          success: false,
+          msg: 'You have already taken part in this survey.'
+        })
+      } else {
+        Survey.addAnswers(_id, body, {}, (err, survey) => {
+          if(err) {
+            res.json({
+              success: false,
+              msg: 'Could not add your answers. Please try again.'
+            });
+          } else {
+            res.json({
+              success: true,
+              msg: 'Your answers have been added. Thank you for participating!',
+              modified: survey.nModified
+            });
+          }
+        });        
+      }
+    }
+  });
+
+  // if(survey){
+  //   console.log(survey);
+  //   if(survey.participants.indexOf(body.from) !== -1) {
+  //     res.json({
+  //       success: false,
+  //       msg: 'You have already taken part in this survey.'
+  //     })
+  //   }
+  // }
+  // Survey.addAnswers(_id, body, {}, (err, survey) => {
+  //   if(err) {
+  //     res.json({
+  //       success: false,
+  //       msg: 'Could not add your answers. Please try again.'
+  //     });
+  //   } else {
+  //     res.json({
+  //       success: true,
+  //       msg: 'Your answers have been added. Thank you for participating!',
+  //       modified: survey.nModified
+  //     });
+  //   }
+  // });
+});
+
 // Get all the surveys
 surveyRouter.get('/', (req, res, next) => {
   Survey.getSurveys((err, surveys) => {
@@ -57,6 +132,29 @@ surveyRouter.get('/', (req, res, next) => {
       });
     }
     if (surveys) {
+      surveys.forEach((survey, index) => {
+        // Check wether or not the survey is limited in time or not
+        if (survey.isLimited) {
+          //  If it's limited, get the current date
+          let now = new Date(Date.now());
+          // Check wether or not the current date is bigger than the endDate of the survey
+          if (now > survey.endDate) {
+            console.log(survey.name + ' is expired: Now:' + now + ' | endDate: ' + survey.endDate);
+            // If the survey is expired, set the isExpired attribute to true
+            survey.isExpired = true;
+            // Save the changed document
+            survey.save(err => {
+              if (err) {
+                console.log('Error updating expired document');
+              } else {
+                console.log('Updating exisiting document successful.');
+              }
+            })
+          } else {
+            console.log('Survey not expired.');
+          }
+        }
+      });
       res.json({
         success: true,
         msg: 'Surveys found.',

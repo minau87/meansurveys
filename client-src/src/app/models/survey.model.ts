@@ -6,6 +6,7 @@ export interface Survey {
   isLimited: Boolean;
   startDate: Date;
   participantsCount: Number;
+  participants?: String[];
   questions: Question[];
   answers: Answer[];
 }
@@ -29,8 +30,13 @@ export interface AnswerPossibility {
 }
 
 export interface Answer {
-  id?: Number;
-  // derp: String;
+  questionId?: Number;
+  answers?: any;
+  // answer: any;
+}
+
+export interface AnswerSet {
+  answers: Answer[];
 }
 
 export interface TextAnswer extends Answer {
@@ -38,11 +44,11 @@ export interface TextAnswer extends Answer {
 }
 
 export interface SingleChoiceAnswer extends Answer {
-  checked: Number;
+  checked: String;
 }
 
 export interface MultipleChoiceAnswer extends Answer {
-  checked: Number[];
+  checked: Boolean[];
 }
 
 export interface ScaleAnswer extends Answer {

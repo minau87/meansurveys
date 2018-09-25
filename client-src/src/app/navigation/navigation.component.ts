@@ -16,7 +16,7 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
     this.isNotLoggedIn = this._authService.isLoggedIn();
-    console.log('this.isLoggedIn:', this.isNotLoggedIn);
+    // console.log('this.isLoggedIn:', this.isNotLoggedIn);
   }
 
   logout() {

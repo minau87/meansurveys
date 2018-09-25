@@ -55,13 +55,13 @@
         <div *ngIf="survey.questions" class="cs-element">
           <span *ngIf="survey.questions.length > 0" class="cs-label">Questions:</span>
           <div *ngIf="survey.questions.length > 0">
-            <a *ngFor="let q of survey.questions; let i = index;" (click)="currentQuestion = i;" [ngClass]="{'question-active': currentQuestion === i }"
+            # of questions: <a *ngFor="let q of survey.questions; let i = index;" (click)="currentQuestion = i;" [ngClass]="{'question-active': currentQuestion === i }"
               class="question-index-label">
-              # of questions: {{ i + 1 }}
+              {{ i + 1 }}
             </a>
           </div>
           <div *ngIf="survey.questions.length === 0">
-            # of questions: No questions yet.
+            There are no questions yet.
           </div>
         </div>
       </div>
