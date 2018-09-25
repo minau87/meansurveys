@@ -191,8 +191,8 @@ export class SurveyDetailComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     // console.log('chartData: ' + chartData);
-    console.log('this.chartConfig.pieChartLabels: ' + this.chartConfig.pieChartLabels);
-    console.log('this.chartConfig.pieChartData: ' + this.chartConfig.pieChartData);
+    // console.log('this.chartConfig.pieChartLabels: ' + this.chartConfig.pieChartLabels);
+    // console.log('this.chartConfig.pieChartData: ' + this.chartConfig.pieChartData);
     this.resultTableColumns = this.chartConfig.pieChartLabels;
     let tableData = Object.assign({}, this.chartConfig.pieChartData);
     this.resultTableData = [];
@@ -203,7 +203,7 @@ export class SurveyDetailComponent implements OnInit, OnChanges, OnDestroy {
 
   switchResultView(){
     this.viewAsChart = this.viewAsChart ? false : true;
-    console.log(this.resultTableData);
+    // console.log(this.resultTableData);
   }
 
   nextQuestion() {

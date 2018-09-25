@@ -17,7 +17,7 @@ The app is powered by a RESTful backend based on [NodeJS](https://nodejs.org/en/
 For the frontend we're using [Angular](https://angular.io/), thus completing the [MEAN stack](https://en.wikipedia.org/wiki/MEAN_(software_bundle)) which we 
 chose as our technology stack for this assignment.
 
-For visualizing the results we're using __Charts.js__. Depending on how much progress is made
+For visualizing the results we're using __Chart.js__. Depending on how much progress is made
 in the limited amount of time we have, real-time updates for displaying the results are 
 an option we consider.
 

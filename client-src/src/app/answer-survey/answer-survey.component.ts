@@ -47,13 +47,13 @@ export class AnswerSurveyComponent implements OnInit, OnDestroy {
 
   toggleDataPreview() {
     this.dataPreviewActive = this.dataPreviewActive ? false : true;
-    console.log(this.getActiveStep());
-    console.log(this.answers);
+    // console.log(this.getActiveStep());
+    // console.log(this.answers);
   }
 
   addAnswer() {
-    let currentQuestion = this.getActiveStep();
-    console.log(currentQuestion);
+    this.currentQuestion = this.getActiveStep();
+    console.log('addAnswer(): currentQuestion: ' + this.currentQuestion);
   }
 
   radioboxValueChanged($event) {
@@ -63,8 +63,10 @@ export class AnswerSurveyComponent implements OnInit, OnDestroy {
   }
 
   checkboxValueChanged($event, i) {
-    console.log('checkBoxValueChanged:', $event);
-    console.log('checkboxIndex:', i);
+    // console.log('checkBoxValueChanged: $event.checked: ', $event.checked);
+    // console.log('checkboxIndex:', i);
+    // console.log('this.answers[this.currentQuestion].checked[i]: ' + this.answers[this.currentQuestion].checked[i]);
+    // console.log('this.currentQuestion: ' + this.currentQuestion);
     this.answers[this.currentQuestion].checked[i] = $event.checked;
     // This is neccessary in order to check wether or not the checkboxes have been touched
     // this.answers[this.currentQuestion].checked.forEach(element => {
@@ -78,7 +80,7 @@ export class AnswerSurveyComponent implements OnInit, OnDestroy {
         this.answers[this.currentQuestion].checked[j] = false;
       }
     }
-    console.log(this.answers);
+    // console.log(this.answers);
   }
 
   createAnswerSet() {
@@ -100,6 +102,7 @@ export class AnswerSurveyComponent implements OnInit, OnDestroy {
         for (let i = 0; i < answer.checked.length; i++) {
           answer.checked[i] = undefined;
         }
+        console.log('answerSet:', answer);
         this.answers[qIndex] = answer;
       }
       if (question.questionType == 'text') {
@@ -156,8 +159,8 @@ export class AnswerSurveyComponent implements OnInit, OnDestroy {
       from: userId,
       answerSet: answerSet
     };
-    this.updateSurveySub = this._surveyService.updateSurvey(this.survey._id, answer).subscribe<SurveyResponse>((res) => {
-      console.log('Response:', res);
+    this.updateSurveySub = this._surveyService.updateSurvey(this.survey._id, answer).subscribe((res: SurveyResponse) => {
+      // console.log('Response:', res);
       if (!res.success) {
         console.log(res.msg);
       } else {

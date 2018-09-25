@@ -25,11 +25,11 @@ export class SurveyListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.surveysSub = this._surveyService.getSurveys().subscribe((res: SurveyResponse) => {
-      console.log('Surveys:', res.surveys);
+      // console.log('Surveys:', res.surveys);
       this.surveys = res.surveys;
       window.setTimeout(() => {
         this.loading = false;
-        console.log('Time is up.');
+        // console.log('Time is up.');
       }, 10000);
       this.loading = false;
     }, (err) => {
